@@ -9,6 +9,8 @@
 
 namespace Tec\Extensions\Admin_Bar_Plus;
 
+use Tribe__Dependency;
+
 /**
  * Class Plugin
  *
@@ -24,7 +26,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '2.0.0';
 
 	/**
 	 * Stores the base slug for the plugin.
@@ -75,6 +77,34 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	private $settings;
 
 	/**
+	 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
+	 *
+	 * @return bool
+	 */
+	public $ecp_active = false;
+
+	/**
+	 * Is Event Tickets active. If yes, we will add some extra functionality.
+	 *
+	 * @return bool
+	 */
+	public $et_active = false;
+
+	/**
+	 * Is Filter Bar active. If yes, we will add some extra functionality.
+	 *
+	 * @return bool
+	 */
+	public $fb_active = false;
+
+	/**
+	 * Is Community Events active. If yes, we will add some extra functionality.
+	 *
+	 * @return bool
+	 */
+	public $ce_active = false;
+
+	/**
 	 * Setup the Extension's properties.
 	 *
 	 * This always executes even if the required plugins are not present.
@@ -103,6 +133,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$this->get_settings();
 
 		// Start binds.
+		add_action( 'tribe_plugins_loaded', [ $this, 'detect_tribe_plugins' ], 0 );
 
 		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
 		add_action( 'admin_menu', [ $this, 'add_submenu_items' ], 11 );
@@ -196,6 +227,34 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$settings = $this->get_settings();
 
 		return $settings->get_option( $option, $default );
+	}
+
+	/**
+	 * Check required plugins after all Tribe plugins have loaded.
+	 *
+	 * Useful for conditionally-requiring a Tribe plugin, whether to add extra functionality
+	 * or require a certain version but only if it is active.
+	 */
+	public function detect_tribe_plugins() {
+		/** @var Tribe__Dependency $dep */
+		$dep = tribe( Tribe__Dependency::class );
+
+		if ( $dep->is_plugin_active( 'Tribe__Events__Pro__Main' ) ) {
+			//$this->add_required_plugin( 'Tribe__Events__Pro__Main' );
+			$this->ecp_active = true;
+		}
+		if ( $dep->is_plugin_active( 'Tribe__Tickets__Main' ) ) {
+			//$this->add_required_plugin( 'Tribe__Tickets__Main' );
+			$this->et_active = true;
+		}
+		if ( $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' ) ) {
+			//$this->add_required_plugin( 'Tribe__Events__Filterbar__View' );
+			$this->fb_active = true;
+		}
+		if ( $dep->is_plugin_active( 'Tribe__Events__Community__Main' ) ) {
+			//$this->add_required_plugin( 'Tribe__Events__Community__Main' );
+			$this->ce_active = true;
+		}
 	}
 
 	/**
