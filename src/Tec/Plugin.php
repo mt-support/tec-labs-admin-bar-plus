@@ -268,7 +268,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-general',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'General', 'tribe-common' ),
-				'href'   => 'edit.php?page=tribe-common&tab=general&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=general&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'General', 'tribe-common' ),
 					'class' => 'my_menu_item_class',
@@ -281,7 +281,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-display',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'Display', 'tribe-common' ),
-				'href'   => 'edit.php?page=tribe-common&tab=display&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=display&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'Display', 'tribe-common' ),
 					'class' => 'my_menu_item_class',
@@ -298,7 +298,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-licenses',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'Licenses', 'tribe-common' ),
-				'href'   => 'edit.php?page=tribe-common&tab=licenses&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=licenses&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'Licenses', 'tribe-common' ),
 					'class' => 'my_menu_item_class',
@@ -311,7 +311,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-apis',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'APIs', 'tribe-common' ),
-				'href'   => 'edit.php?page=tribe-common&tab=addons&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=addons&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'APIs', 'tribe-common' ),
 					'class' => 'my_menu_item_class',
@@ -324,7 +324,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-imports',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'Imports', 'the-events-calendar' ),
-				'href'   => 'edit.php?page=tribe-common&tab=imports&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=imports&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'Imports', 'the-events-calendar' ),
 					'class' => 'my_menu_item_class',
@@ -348,7 +348,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-tickets',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'Tickets', 'event-tickets' ),
-				'href'   => 'edit.php?page=tribe-common&tab=event-tickets&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=event-tickets&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'Tickets', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
@@ -372,7 +372,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-default-content',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'Default Content', 'tribe-events-calendar-pro' ),
-				'href'   => 'edit.php?page=tribe-common&tab=defaults&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=defaults&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'Default Content', 'tribe-events-calendar-pro' ),
 					'class' => 'my_menu_item_class',
@@ -385,7 +385,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'     => 'tribe-events-settings-additional-fields',
 				'parent' => 'tribe-events-settings',
 				'title'  => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
-				'href'   => 'edit.php?page=tribe-common&tab=additional-fields&post_type=tribe_events',
+				'href'   => 'edit.php?page=tec-events-settings&tab=additional-fields&post_type=tribe_events',
 				'meta'   => [
 					'title' => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
 					'class' => 'my_menu_item_class',
@@ -403,7 +403,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			'',
 			'-> ' . __( 'General', 'tribe-common' ),
 			'manage_options',
-			'edit.php?page=tribe-common&tab=general&post_type=tribe_events'
+			'edit.php?page=tec-events-settings&tab=general&post_type=tribe_events'
 		);
 
 		add_submenu_page(
@@ -411,7 +411,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			'',
 			'-> ' . __( 'Display', 'tribe-common' ),
 			'manage_options',
-			'edit.php?page=tribe-common&tab=display&post_type=tribe_events'
+			'edit.php?page=tec-events-settings&tab=display&post_type=tribe_events'
 		);
 
 		if ( $this->et_active ) {
@@ -419,7 +419,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'edit.php?post_type=tribe_events', '',
 				'-> ' . __( 'Tickets', 'event-tickets' ),
 				'manage_options',
-				'edit.php?page=tribe-common&tab=event-tickets&post_type=tribe_events'
+				'edit.php?page=tec-events-settings&tab=event-tickets&post_type=tribe_events'
 			);
 		}
 
@@ -428,7 +428,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'edit.php?post_type=tribe_events', '',
 				'-> ' . __( 'Default Content', 'tribe-events-calendar-pro' ),
 				'manage_options',
-				'edit.php?page=tribe-common&tab=defaults&post_type=tribe_events'
+				'edit.php?page=tec-events-settings&tab=defaults&post_type=tribe_events'
 			);
 
 			add_submenu_page(
@@ -436,7 +436,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'',
 				'-> ' . __( 'Additional Fields', 'tribe-events-calendar-pro' ),
 				'manage_options',
-				'edit.php?page=tribe-common&tab=additional-fields&post_type=tribe_events'
+				'edit.php?page=tec-events-settings&tab=additional-fields&post_type=tribe_events'
 			);
 		}
 
@@ -445,7 +445,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'edit.php?post_type=tribe_events', '',
 				'-> ' . __( 'Community', 'tribe-events-community' ),
 				'manage_options',
-				'edit.php?page=tribe-common&tab=community&post_type=tribe_events'
+				'edit.php?page=tec-events-settings&tab=community&post_type=tribe_events'
 			);
 		}
 
@@ -454,7 +454,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'edit.php?post_type=tribe_events', '',
 				'-> ' . __( 'Filters', 'tribe-events-filter-view' ),
 				'manage_options',
-				'edit.php?page=tribe-common&tab=filter-view&post_type=tribe_events'
+				'edit.php?page=tec-events-settings&tab=filter-view&post_type=tribe_events'
 			);
 		}
 
@@ -462,7 +462,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			'edit.php?post_type=tribe_events', '',
 			'-> ' . __( 'Licenses', 'tribe-common' ),
 			'manage_options',
-			'edit.php?page=tribe-common&tab=licenses&post_type=tribe_events'
+			'edit.php?page=tec-events-settings&tab=licenses&post_type=tribe_events'
 		);
 
 		add_submenu_page(
@@ -470,14 +470,14 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			'',
 			'-> ' . __( 'APIs', 'tribe-common' ),
 			'manage_options',
-			'edit.php?page=tribe-common&tab=addons&post_type=tribe_events'
+			'edit.php?page=tec-events-settings&tab=addons&post_type=tribe_events'
 		);
 
 		add_submenu_page(
 			'edit.php?post_type=tribe_events', '',
 			'-> ' . __( 'Imports', 'the-events-calendar' ),
 			'manage_options',
-			'edit.php?page=tribe-common&tab=imports&post_type=tribe_events'
+			'edit.php?page=tec-events-settings&tab=imports&post_type=tribe_events'
 		);
 	}
 }
