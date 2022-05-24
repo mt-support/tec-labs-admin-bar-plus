@@ -104,7 +104,8 @@ class Plugin extends \tad_DI52_ServiceProvider {
 
 		// Start binds.
 
-
+		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
+		add_action( 'admin_menu', [ $this, 'add_submenu_items' ], 11 );
 
 		// End binds.
 
@@ -195,5 +196,229 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$settings = $this->get_settings();
 
 		return $settings->get_option( $option, $default );
+	}
+
+	/**
+	 * Add our custom menu items, as applicable.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function add_toolbar_items( $admin_bar ) {
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-general',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'General', 'tribe-common' ),
+				'href'   => 'edit.php?page=tribe-common&tab=general&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'General', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-display',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Display', 'tribe-common' ),
+				'href'   => 'edit.php?page=tribe-common&tab=display&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'Display', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$this->add_toolbar_items_et( $admin_bar );
+
+		$this->add_toolbar_items_ecp( $admin_bar );
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-licenses',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Licenses', 'tribe-common' ),
+				'href'   => 'edit.php?page=tribe-common&tab=licenses&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'Licenses', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-apis',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'APIs', 'tribe-common' ),
+				'href'   => 'edit.php?page=tribe-common&tab=addons&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'APIs', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-imports',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Imports', 'the-events-calendar' ),
+				'href'   => 'edit.php?page=tribe-common&tab=imports&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'Imports', 'the-events-calendar' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add Event Tickets' custom menu items.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function add_toolbar_items_et( $admin_bar ) {
+		if ( ! $this->et_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-tickets',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Tickets', 'event-tickets' ),
+				'href'   => 'edit.php?page=tribe-common&tab=event-tickets&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'Tickets', 'event-tickets' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add Events Calendar Pro's custom menu items.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function add_toolbar_items_ecp( $admin_bar ) {
+		if ( ! $this->ecp_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-default-content',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Default Content', 'tribe-events-calendar-pro' ),
+				'href'   => 'edit.php?page=tribe-common&tab=defaults&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'Default Content', 'tribe-events-calendar-pro' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-additional-fields',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
+				'href'   => 'edit.php?page=tribe-common&tab=additional-fields&post_type=tribe_events',
+				'meta'   => [
+					'title' => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add submenu items.
+	 */
+	public function add_submenu_items() {
+		add_submenu_page(
+			'edit.php?post_type=tribe_events',
+			'',
+			'-> ' . __( 'General', 'tribe-common' ),
+			'manage_options',
+			'edit.php?page=tribe-common&tab=general&post_type=tribe_events'
+		);
+
+		add_submenu_page(
+			'edit.php?post_type=tribe_events',
+			'',
+			'-> ' . __( 'Display', 'tribe-common' ),
+			'manage_options',
+			'edit.php?page=tribe-common&tab=display&post_type=tribe_events'
+		);
+
+		if ( $this->et_active ) {
+			add_submenu_page(
+				'edit.php?post_type=tribe_events', '',
+				'-> ' . __( 'Tickets', 'event-tickets' ),
+				'manage_options',
+				'edit.php?page=tribe-common&tab=event-tickets&post_type=tribe_events'
+			);
+		}
+
+		if ( $this->ecp_active ) {
+			add_submenu_page(
+				'edit.php?post_type=tribe_events', '',
+				'-> ' . __( 'Default Content', 'tribe-events-calendar-pro' ),
+				'manage_options',
+				'edit.php?page=tribe-common&tab=defaults&post_type=tribe_events'
+			);
+
+			add_submenu_page(
+				'edit.php?post_type=tribe_events',
+				'',
+				'-> ' . __( 'Additional Fields', 'tribe-events-calendar-pro' ),
+				'manage_options',
+				'edit.php?page=tribe-common&tab=additional-fields&post_type=tribe_events'
+			);
+		}
+
+		if ( $this->ce_active ) {
+			add_submenu_page(
+				'edit.php?post_type=tribe_events', '',
+				'-> ' . __( 'Community', 'tribe-events-community' ),
+				'manage_options',
+				'edit.php?page=tribe-common&tab=community&post_type=tribe_events'
+			);
+		}
+
+		if ( $this->fb_active ) {
+			add_submenu_page(
+				'edit.php?post_type=tribe_events', '',
+				'-> ' . __( 'Filters', 'tribe-events-filter-view' ),
+				'manage_options',
+				'edit.php?page=tribe-common&tab=filter-view&post_type=tribe_events'
+			);
+		}
+
+		add_submenu_page(
+			'edit.php?post_type=tribe_events', '',
+			'-> ' . __( 'Licenses', 'tribe-common' ),
+			'manage_options',
+			'edit.php?page=tribe-common&tab=licenses&post_type=tribe_events'
+		);
+
+		add_submenu_page(
+			'edit.php?post_type=tribe_events',
+			'',
+			'-> ' . __( 'APIs', 'tribe-common' ),
+			'manage_options',
+			'edit.php?page=tribe-common&tab=addons&post_type=tribe_events'
+		);
+
+		add_submenu_page(
+			'edit.php?post_type=tribe_events', '',
+			'-> ' . __( 'Imports', 'the-events-calendar' ),
+			'manage_options',
+			'edit.php?page=tribe-common&tab=imports&post_type=tribe_events'
+		);
 	}
 }
