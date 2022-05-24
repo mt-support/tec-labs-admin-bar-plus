@@ -4,10 +4,10 @@
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  */
 
-namespace Tribe\Extensions\Admin_Bar_Plus;
+namespace Tec\Extensions\Admin_Bar_Plus;
 
 use Tribe__Abstract_Plugin_Register as Abstract_Plugin_Register;
 
@@ -16,7 +16,7 @@ use Tribe__Abstract_Plugin_Register as Abstract_Plugin_Register;
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  *
  * @see Tribe__Abstract_Plugin_Register For the plugin dependency manifest registration.
  */

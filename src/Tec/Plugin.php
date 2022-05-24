@@ -4,17 +4,17 @@
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  */
 
-namespace Tribe\Extensions\Admin_Bar_Plus;
+namespace Tec\Extensions\Admin_Bar_Plus;
 
 /**
  * Class Plugin
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  */
 class Plugin extends \tad_DI52_ServiceProvider {
 	/**
@@ -42,7 +42,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const FILE = TRIBE_EXTENSION_ADMIN_BAR_PLUS_FILE;
+	const FILE = TEC_EXTENSION_ADMIN_BAR_PLUS_FILE;
 
 	/**
 	 * @since 1.0.0
@@ -145,7 +145,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return string
      *
-	 * @see \Tribe\Extensions\Admin_Bar_Plus\Settings::set_options_prefix()
+	 * @see \Tec\Extensions\Admin_Bar_Plus\Settings::set_options_prefix()
 	 *
 	 * TODO: Remove if not using settings
 	 */
