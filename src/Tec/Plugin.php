@@ -476,7 +476,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',
 			'',
-			'-> ' . __( 'APIs', 'tribe-common' ),
+			'-> ' . __( 'Integrations', 'tribe-common' ),
 			'manage_options',
 			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=addons'
 		);
