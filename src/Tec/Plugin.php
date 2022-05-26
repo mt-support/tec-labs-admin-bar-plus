@@ -457,6 +457,13 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			);
 		}
 
+		add_submenu_page(
+			'edit.php?post_type=tribe_events', '',
+			'-> ' . __( 'Licenses', 'tribe-common' ),
+			'manage_options',
+			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=licenses'
+		);
+
 		if ( $this->fb_active ) {
 			add_submenu_page(
 				'edit.php?post_type=tribe_events', '',
@@ -465,13 +472,6 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'edit.php?post_type=tribe_events&page=tec-events-settings&tab=filter-view'
 			);
 		}
-
-		add_submenu_page(
-			'edit.php?post_type=tribe_events', '',
-			'-> ' . __( 'Licenses', 'tribe-common' ),
-			'manage_options',
-			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=licenses'
-		);
 
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',
