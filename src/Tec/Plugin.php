@@ -408,11 +408,11 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	public function launch() {
 
 		if ( $this->tec_active ) {
-			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ] );
+			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ], 10 );
 		}
 
 		if ( $this->et_active ) {
-			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 99 );
+			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 9 );
 		}
 	}
 
@@ -506,13 +506,42 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 * Add Tickets submenu items.
 	 */
 	public function add_tickets_submenu_items() {
-		add_submenu_page(
-			'edit.php?post_type=ticket-meta-fieldset', '',
-			'-> ' . __( 'General TTT', 'event-tickets' ),
-			'manage_options',
-			'admin.php?page=tec-tickets-settings&tab=event-tickets'
+		$admin_pages = tribe( 'admin.pages' );
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-settings-2',
+				'parent'   => 'tec-tickets',
+				'title'    => esc_html__( 'Settings', 'the-events-calendar' ),
+				'path'     => 'tec-tickets-settings',
+			]
 		);
 
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-general',
+				'parent'   => 'tec-tickets',
+				'title'    => '-> ' . esc_html__( 'General', 'the-events-calendar' ),
+				'path'     => 'tec-tickets-settings&tab=event-tickets',
+			]
+		);
 
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-payments',
+				'parent'   => 'tec-tickets',
+				'title'    => '-> ' . esc_html__( 'Payments', 'the-events-calendar' ),
+				'path'     => 'tec-tickets-settings&tab=payments',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-licenses',
+				'parent'   => 'tec-tickets',
+				'title'    => '-> ' . esc_html__( 'Licenses', 'the-events-calendar' ),
+				'path'     => 'tec-tickets-settings&tab=licenses',
+			]
+		);
 	}
 }
