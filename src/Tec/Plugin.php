@@ -420,85 +420,102 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 * Add TEC submenu items.
 	 */
 	public function add_tec_submenu_items() {
-		add_submenu_page(
-			'edit.php?post_type=tribe_events',
-			'',
-			__( 'Settings', 'tribe-common' ),
-			'manage_options',
-			'edit.php?post_type=tribe_events&page=tec-events-settings'
+		$admin_pages = tribe( 'admin.pages' );
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-2',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => esc_html__( 'Settings', 'tribe-common' ),
+				'path'     => 'tec-events-settings',
+			]
 		);
 
-		add_submenu_page(
-			'edit.php?post_type=tribe_events',
-			'',
-			'-> ' . __( 'General', 'tribe-common' ),
-			'manage_options',
-			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=general'
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-general',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'General', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=general',
+			]
 		);
 
-		add_submenu_page(
-			'edit.php?post_type=tribe_events',
-			'',
-			'-> ' . __( 'Display', 'tribe-common' ),
-			'manage_options',
-			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=display'
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-display',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Display', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=display',
+			]
 		);
 
 		if ( $this->ecp_active ) {
-			add_submenu_page(
-				'edit.php?post_type=tribe_events', '',
-				'-> ' . __( 'Default Content', 'tribe-events-calendar-pro' ),
-				'manage_options',
-				'edit.php?post_type=tribe_events&page=tec-events-settings&tab=defaults'
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-pro-settings-defaults',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Default Content', 'tribe-events-calendar-pro' ),
+					'path'     => 'tec-events-settings&tab=defaults',
+				]
 			);
 
-			add_submenu_page(
-				'edit.php?post_type=tribe_events',
-				'',
-				'-> ' . __( 'Additional Fields', 'tribe-events-calendar-pro' ),
-				'manage_options',
-				'edit.php?post_type=tribe_events&page=tec-events-settings&tab=additional-fields'
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-pro-settings-additional-fields',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Additional Fields', 'tribe-events-calendar-pro' ),
+					'path'     => 'tec-events-settings&tab=additional-fields',
+				]
 			);
 		}
 
 		if ( $this->ce_active ) {
-			add_submenu_page(
-				'edit.php?post_type=tribe_events', '',
-				'-> ' . __( 'Community', 'tribe-events-community' ),
-				'manage_options',
-				'edit.php?post_type=tribe_events&page=tec-events-settings&tab=community'
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-community-settings-community',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Community', 'tribe-events-community' ),
+					'path'     => 'tec-events-settings&tab=community',
+				]
 			);
 		}
 
-		add_submenu_page(
-			'edit.php?post_type=tribe_events', '',
-			'-> ' . __( 'Licenses', 'tribe-common' ),
-			'manage_options',
-			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=licenses'
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-licenses',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=licenses',
+			]
 		);
 
 		if ( $this->fb_active ) {
-			add_submenu_page(
-				'edit.php?post_type=tribe_events', '',
-				'-> ' . __( 'Filters', 'tribe-events-filter-view' ),
-				'manage_options',
-				'edit.php?post_type=tribe_events&page=tec-events-settings&tab=filter-view'
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-filterbar-settings-filterbar',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Filters', 'tribe-common' ),
+					'path'     => 'tec-events-settings&tab=filter-view',
+				]
 			);
 		}
 
-		add_submenu_page(
-			'edit.php?post_type=tribe_events',
-			'',
-			'-> ' . __( 'Integrations', 'tribe-common' ),
-			'manage_options',
-			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=addons'
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-integrations',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Integrations', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=addons',
+			]
 		);
 
-		add_submenu_page(
-			'edit.php?post_type=tribe_events', '',
-			'-> ' . __( 'Imports', 'the-events-calendar' ),
-			'manage_options',
-			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=imports'
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-imports',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Imports', 'the-events-calendar' ),
+				'path'     => 'tec-events-settings&tab=imports',
+			]
 		);
 	}
 
