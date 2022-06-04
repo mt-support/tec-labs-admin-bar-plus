@@ -142,7 +142,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		// Start binds.
 		add_action( 'tribe_plugins_loaded', [ $this, 'detect_tribe_plugins' ], 0 );
 
-		//add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
+		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
 		add_action( 'init', [ $this, 'launch' ] );
 
 		// End binds.
@@ -300,9 +300,11 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			]
 		);
 
-		$this->add_toolbar_items_et( $admin_bar );
+		$this->maybe_add_toolbar_items_ecp( $admin_bar );
 
-		$this->add_toolbar_items_ecp( $admin_bar );
+		$this->maybe_add_toolbar_items_ce( $admin_bar );
+
+		$this->maybe_add_toolbar_items_filterbar( $admin_bar );
 
 		$admin_bar->add_menu(
 			[
@@ -321,10 +323,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-events-settings-apis',
 				'parent' => 'tribe-events-settings',
-				'title'  => __( 'APIs', 'tribe-common' ),
+				'title'  => __( 'Integrations', 'tribe-common' ),
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=addons',
 				'meta'   => [
-					'title' => __( 'APIs', 'tribe-common' ),
+					'title' => __( 'Integrations', 'tribe-common' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -373,7 +375,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @param \WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_items_ecp( $admin_bar ) {
+	public function maybe_add_toolbar_items_ecp( $admin_bar ) {
 		if ( ! $this->ecp_active ) {
 			return;
 		}
@@ -399,6 +401,54 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=additional-fields',
 				'meta'   => [
 					'title' => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add Community Events' custom menu items.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function maybe_add_toolbar_items_ce( $admin_bar ) {
+		if ( ! $this->ce_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-community',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Community', 'tribe-events-community' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=community',
+				'meta'   => [
+					'title' => __( 'Community', 'tribe-events-community' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add Filter Bar's custom menu items.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function maybe_add_toolbar_items_filterbar( $admin_bar ) {
+		if ( ! $this->fb_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-filters',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Filters', 'tribe-common' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=filter-view',
+				'meta'   => [
+					'title' => __( 'Filters', 'tribe-common' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
