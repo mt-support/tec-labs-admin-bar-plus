@@ -521,7 +521,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-general',
 				'parent'   => 'tec-tickets',
-				'title'    => '-> ' . esc_html__( 'General', 'the-events-calendar' ),
+				'title'    => '&#8594; ' . esc_html__( 'General', 'the-events-calendar' ),
 				'path'     => 'tec-tickets-settings&tab=event-tickets',
 			]
 		);
@@ -530,7 +530,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-payments',
 				'parent'   => 'tec-tickets',
-				'title'    => '-> ' . esc_html__( 'Payments', 'the-events-calendar' ),
+				'title'    => '&#8594; ' . esc_html__( 'Payments', 'the-events-calendar' ),
 				'path'     => 'tec-tickets-settings&tab=payments',
 			]
 		);
@@ -539,7 +539,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-licenses',
 				'parent'   => 'tec-tickets',
-				'title'    => '-> ' . esc_html__( 'Licenses', 'the-events-calendar' ),
+				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'the-events-calendar' ),
 				'path'     => 'tec-tickets-settings&tab=licenses',
 			]
 		);
