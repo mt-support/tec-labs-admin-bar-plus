@@ -521,6 +521,34 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			]
 		);
 
+		if ( tribe_get_option( 'tickets_commerce_enabled' ) ) {
+			$admin_bar->add_menu(
+				[
+					'id'     => 'tribe-tickets-settings-payments-stripe',
+					'parent' => 'tribe-tickets-settings',
+					'title'  => '&#8594; ' . __( 'Stripe', 'tribe-common' ),
+					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
+					'meta'   => [
+						'title' => __( 'Stripe', 'tribe-common' ),
+						'class' => 'my_menu_item_class',
+					],
+				]
+			);
+
+			$admin_bar->add_menu(
+				[
+					'id'     => 'tribe-tickets-settings-payments-paypal',
+					'parent' => 'tribe-tickets-settings',
+					'title'  => '&#8594; ' . __( 'PayPal', 'tribe-common' ),
+					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
+					'meta'   => [
+						'title' => __( 'PayPal', 'tribe-common' ),
+						'class' => 'my_menu_item_class',
+					],
+				]
+			);
+		}
+
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-licenses',
@@ -669,7 +697,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'       => 'tec-tickets-general',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'General', 'the-events-calendar' ),
-				'path'     => 'tec-tickets-settings&tab=event-tickets',
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
 			]
 		);
 
@@ -678,16 +706,37 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'id'       => 'tec-tickets-payments',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'Payments', 'the-events-calendar' ),
-				'path'     => 'tec-tickets-settings&tab=payments',
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=payments',
 			]
 		);
+
+		if ( tribe_get_option( 'tickets_commerce_enabled' ) ) {
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-tickets-payments-stripe',
+					'parent'   => 'tec-tickets',
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'Stripe', 'the-events-calendar' ),
+					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
+				]
+			);
+
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-tickets-payments-paypal',
+					'parent'   => 'tec-tickets',
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'Paypal', 'the-events-calendar' ),
+					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
+				]
+			);
+
+		}
 
 		$admin_pages->register_page(
 			[
 				'id'       => 'tec-tickets-licenses',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'the-events-calendar' ),
-				'path'     => 'tec-tickets-settings&tab=licenses',
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=licenses',
 			]
 		);
 	}
