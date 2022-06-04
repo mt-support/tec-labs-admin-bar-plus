@@ -189,7 +189,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 */
 	private function get_options_prefix() {
-		return (string) str_replace( '-', '_', 'tribe-ext-admin-bar-plus' );
+		return (string) str_replace( '-', '_', 'tec-labs-admin-bar-plus' );
 	}
 
 	/**
