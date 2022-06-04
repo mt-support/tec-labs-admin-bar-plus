@@ -143,7 +143,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		add_action( 'tribe_plugins_loaded', [ $this, 'detect_tribe_plugins' ], 0 );
 
 		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
+		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_item_tec_tickets' ], 1999 );
 		add_action( 'init', [ $this, 'launch' ] );
+
 
 		// End binds.
 
@@ -274,6 +276,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 * @param \WP_Admin_Bar $admin_bar
 	 */
 	public function add_toolbar_items( $admin_bar ) {
+
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-events-settings-general',
@@ -449,6 +452,83 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=filter-view',
 				'meta'   => [
 					'title' => __( 'Filters', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add our custom menu items, as applicable.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function add_toolbar_item_tec_tickets( $admin_bar ) {
+
+		if ( ! $this->et_active ) {
+			return false;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets',
+				'parent' => false,
+				'title'  => __( 'Tickets', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets',
+				'meta'   => [
+					'title' => __( 'Tickets', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Settings', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=general',
+				'meta'   => [
+					'title' => __( 'Settings', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-general',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'General', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
+				'meta'   => [
+					'title' => __( 'General', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-payments',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Payments', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=payments',
+				'meta'   => [
+					'title' => __( 'Payments', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-licenses',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Licenses', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=licenses',
+				'meta'   => [
+					'title' => __( 'Licenses', 'tribe-common' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
