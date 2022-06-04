@@ -480,15 +480,6 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			);
 		}
 
-		$admin_pages->register_page(
-			[
-				'id'       => 'tec-events-settings-licenses',
-				'parent'   => 'edit.php?post_type=tribe_events',
-				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'tribe-common' ),
-				'path'     => 'tec-events-settings&tab=licenses',
-			]
-		);
-
 		if ( $this->fb_active ) {
 			$admin_pages->register_page(
 				[
@@ -499,6 +490,15 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				]
 			);
 		}
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-licenses',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=licenses',
+			]
+		);
 
 		$admin_pages->register_page(
 			[
