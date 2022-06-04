@@ -77,6 +77,13 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	private $settings;
 
 	/**
+	 * Is The Events Calendar active. If yes, we will add some extra functionality.
+	 *
+	 * @return bool
+	 */
+	public $tec_active = false;
+
+	/**
 	 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
 	 *
 	 * @return bool
@@ -135,8 +142,8 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		// Start binds.
 		add_action( 'tribe_plugins_loaded', [ $this, 'detect_tribe_plugins' ], 0 );
 
-		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
-		add_action( 'admin_menu', [ $this, 'add_submenu_items' ], 15 );
+		//add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
+		add_action( 'init', [ $this, 'launch' ] );
 
 		// End binds.
 
@@ -175,11 +182,11 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * Settings_Helper will append a trailing underscore before each option.
 	 *
-	 * @return string
-     *
 	 * @see \Tec\Extensions\Admin_Bar_Plus\Settings::set_options_prefix()
 	 *
 	 * TODO: Remove if not using settings
+	 * @return string
+	 *
 	 */
 	private function get_options_prefix() {
 		return (string) str_replace( '-', '_', 'tribe-ext-admin-bar-plus' );
@@ -216,7 +223,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Get a specific extension option.
 	 *
-	 * @param $option
+	 * @param        $option
 	 * @param string $default
 	 *
 	 * @return array
@@ -239,6 +246,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		/** @var Tribe__Dependency $dep */
 		$dep = tribe( Tribe__Dependency::class );
 
+		if ( $dep->is_plugin_active( 'Tribe__Events__Main' ) ) {
+			//$this->add_required_plugin( 'Tribe__Events__Pro__Main' );
+			$this->tec_active = true;
+		}
 		if ( $dep->is_plugin_active( 'Tribe__Events__Pro__Main' ) ) {
 			//$this->add_required_plugin( 'Tribe__Events__Pro__Main' );
 			$this->ecp_active = true;
@@ -394,10 +405,21 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		);
 	}
 
+	public function launch() {
+
+		if ( $this->tec_active ) {
+			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ] );
+		}
+
+		if ( $this->et_active ) {
+			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 99 );
+		}
+	}
+
 	/**
-	 * Add submenu items.
+	 * Add TEC submenu items.
 	 */
-	public function add_submenu_items() {
+	public function add_tec_submenu_items() {
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',
 			'',
@@ -421,15 +443,6 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			'manage_options',
 			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=display'
 		);
-
-/*		if ( $this->et_active ) {
-			add_submenu_page(
-				'edit.php?post_type=tribe_events', '',
-				'-> ' . __( 'Tickets', 'event-tickets' ),
-				'manage_options',
-				'edit.php?post_type=tribe_events&page=tec-events-settings&tab=event-tickets'
-			);
-		}*/
 
 		if ( $this->ecp_active ) {
 			add_submenu_page(
@@ -487,5 +500,19 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			'manage_options',
 			'edit.php?post_type=tribe_events&page=tec-events-settings&tab=imports'
 		);
+	}
+
+	/**
+	 * Add Tickets submenu items.
+	 */
+	public function add_tickets_submenu_items() {
+		add_submenu_page(
+			'edit.php?post_type=ticket-meta-fieldset', '',
+			'-> ' . __( 'General TTT', 'event-tickets' ),
+			'manage_options',
+			'admin.php?page=tec-tickets-settings&tab=event-tickets'
+		);
+
+
 	}
 }
