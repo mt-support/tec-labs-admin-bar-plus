@@ -70,12 +70,16 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Is The Events Calendar active. If yes, we will add some extra functionality.
 	 *
+	 * @since 2.0.0
+	 *
 	 * @return bool
 	 */
 	public $tec_active = false;
 
 	/**
 	 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
@@ -84,6 +88,8 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Is Event Tickets active. If yes, we will add some extra functionality.
 	 *
+	 * @since 2.0.0
+	 *
 	 * @return bool
 	 */
 	public $et_active = false;
@@ -91,12 +97,16 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Is Filter Bar active. If yes, we will add some extra functionality.
 	 *
+	 * @since 1.0.0
+	 *
 	 * @return bool
 	 */
 	public $fb_active = false;
 
 	/**
 	 * Is Community Events active. If yes, we will add some extra functionality.
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return bool
 	 */
@@ -131,9 +141,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 
 		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items_tec_events' ], 100 );
 		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items_tec_tickets' ], 1999 );
-		add_action( 'init', [ $this, 'launch' ] );
-
-
+		add_action( 'init', [ $this, 'launch_admin_menu' ] );
 		// End binds.
 
 		$this->container->register( Hooks::class );
@@ -177,23 +185,18 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$dep = tribe( Tribe__Dependency::class );
 
 		if ( $dep->is_plugin_active( 'Tribe__Events__Main' ) ) {
-			//$this->add_required_plugin( 'Tribe__Events__Pro__Main' );
 			$this->tec_active = true;
 		}
 		if ( $dep->is_plugin_active( 'Tribe__Events__Pro__Main' ) ) {
-			//$this->add_required_plugin( 'Tribe__Events__Pro__Main' );
 			$this->ecp_active = true;
 		}
 		if ( $dep->is_plugin_active( 'Tribe__Tickets__Main' ) ) {
-			//$this->add_required_plugin( 'Tribe__Tickets__Main' );
 			$this->et_active = true;
 		}
 		if ( $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' ) ) {
-			//$this->add_required_plugin( 'Tribe__Events__Filterbar__View' );
 			$this->fb_active = true;
 		}
 		if ( $dep->is_plugin_active( 'Tribe__Events__Community__Main' ) ) {
-			//$this->add_required_plugin( 'Tribe__Events__Community__Main' );
 			$this->ce_active = true;
 		}
 	}
@@ -394,7 +397,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	public function add_toolbar_items_tec_tickets( $admin_bar ) {
 
 		if ( ! $this->et_active ) {
-			return false;
+			return;
 		}
 
 		$admin_bar->add_menu(
@@ -491,7 +494,14 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		);
 	}
 
-	public function launch() {
+	/**
+	 * Add menu items based on active plugin.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return void
+	 */
+	public function launch_admin_menu() {
 
 		if ( $this->tec_active ) {
 			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ], 10 );
@@ -656,7 +666,6 @@ class Plugin extends \tad_DI52_ServiceProvider {
 					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
 				]
 			);
-
 		}
 
 		$admin_pages->register_page(
