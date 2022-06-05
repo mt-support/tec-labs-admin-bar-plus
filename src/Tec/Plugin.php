@@ -130,10 +130,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$this->container->singleton( 'extension.admin_bar_plus.plugin', $this );
 		$this->container->register( PUE::class );
 
-		if ( ! $this->check_plugin_dependencies() ) {
+		/*if ( ! $this->check_plugin_dependencies() ) {
 			// If the plugin dependency manifest is not met, then bail and stop here.
 			return;
-		}
+		}*/
 
 		// Do the settings.
 		// TODO: Remove if not using settings
@@ -142,8 +142,8 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		// Start binds.
 		add_action( 'tribe_plugins_loaded', [ $this, 'detect_tribe_plugins' ], 0 );
 
-		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items' ], 100 );
-		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_item_tec_tickets' ], 1999 );
+		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items_tec_events' ], 100 );
+		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items_tec_tickets' ], 1999 );
 		add_action( 'init', [ $this, 'launch' ] );
 
 
@@ -275,7 +275,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @param \WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_items( $admin_bar ) {
+	public function add_toolbar_items_tec_events( $admin_bar ) {
 
 		$admin_bar->add_menu(
 			[
@@ -463,7 +463,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @param \WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_item_tec_tickets( $admin_bar ) {
+	public function add_toolbar_items_tec_tickets( $admin_bar ) {
 
 		if ( ! $this->et_active ) {
 			return false;
