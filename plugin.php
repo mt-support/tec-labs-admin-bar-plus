@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       The Events Calendar Extension: Admin Bar Plus
- * Plugin URI:        
+ * Plugin URI:        https://theeventscalendar.com/extensions/admin-bar-plus/
  * GitHub Plugin URI: https://github.com/mt-support/tec-labs-admin-bar-plus
- * Description:       
+ * Description:       Adds quick links to the Events and Tickets settings pages to the admin bar and to the sidebar. The extension requires The Events Calendar 5.15.0 or higher, or Event Tickets 5.4.0 or higher.
  * Version:           2.0.0
  * Author:            The Events Calendar
  * Author URI:        https://evnt.is/1971
