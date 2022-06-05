@@ -4,10 +4,10 @@
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus;
+ * @package Tec\Extensions\Admin_Bar_Plus;
  */
 
-namespace Tribe\Extensions\Admin_Bar_Plus;
+namespace Tec\Extensions\Admin_Bar_Plus;
 
 use Tribe__PUE__Checker;
 
@@ -16,7 +16,7 @@ use Tribe__PUE__Checker;
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus;
+ * @package Tec\Extensions\Admin_Bar_Plus;
  */
 class PUE extends \tad_DI52_ServiceProvider {
 

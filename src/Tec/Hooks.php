@@ -4,22 +4,22 @@
  *
  * To remove a filter:
  * ```php
- *  remove_filter( 'some_filter', [ tribe( Tribe\Extensions\Admin_Bar_Plus\Hooks::class ), 'some_filtering_method' ] );
+ *  remove_filter( 'some_filter', [ tribe( Tec\Extensions\Admin_Bar_Plus\Hooks::class ), 'some_filtering_method' ] );
  *  remove_filter( 'some_filter', [ tribe( 'extension.admin_bar_plus.hooks' ), 'some_filtering_method' ] );
  * ```
  *
  * To remove an action:
  * ```php
- *  remove_action( 'some_action', [ tribe( Tribe\Extensions\Admin_Bar_Plus\Hooks::class ), 'some_method' ] );
+ *  remove_action( 'some_action', [ tribe( Tec\Extensions\Admin_Bar_Plus\Hooks::class ), 'some_method' ] );
  *  remove_action( 'some_action', [ tribe( 'extension.admin_bar_plus.hooks' ), 'some_method' ] );
  * ```
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus;
+ * @package Tec\Extensions\Admin_Bar_Plus;
  */
 
-namespace Tribe\Extensions\Admin_Bar_Plus;
+namespace Tec\Extensions\Admin_Bar_Plus;
 
 use Tribe__Main as Common;
 
@@ -28,7 +28,7 @@ use Tribe__Main as Common;
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus;
+ * @package Tec\Extensions\Admin_Bar_Plus;
  */
 class Hooks extends \tad_DI52_ServiceProvider {
 
@@ -70,7 +70,7 @@ class Hooks extends \tad_DI52_ServiceProvider {
 	 */
 	public function load_text_domains() {
 		$mopath = tribe( Plugin::class )->plugin_dir . 'lang/';
-		$domain = '__TRIBE_DOMAIN__';
+		$domain = 'tec-admin-bar-plus';
 
 		// This will load `wp-content/languages/plugins` files first.
 		Common::instance()->load_text_domain( $domain, $mopath );

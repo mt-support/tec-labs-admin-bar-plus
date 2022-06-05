@@ -1,15 +1,15 @@
 <?php
 /**
  * Plugin Name:       The Events Calendar Extension: Admin Bar Plus
- * Plugin URI:        
+ * Plugin URI:        https://theeventscalendar.com/extensions/admin-bar-plus/
  * GitHub Plugin URI: https://github.com/mt-support/tec-labs-admin-bar-plus
- * Description:       
- * Version:           1.0.0
+ * Description:       Adds quick links to the Events and Tickets settings pages to the admin bar and to the sidebar. The extension requires The Events Calendar 5.15.0 or higher, or Event Tickets 5.4.0 or higher.
+ * Version:           2.0.0
  * Author:            The Events Calendar
  * Author URI:        https://evnt.is/1971
  * License:           GPL version 3 or any later version
  * License URI:       https://www.gnu.org/licenses/gpl-3.0.html
- * Text Domain:       __TRIBE_DOMAIN__
+ * Text Domain:       tec-admin-bar-plus
  *
  *     This plugin is free software: you can redistribute it and/or modify
  *     it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
  *
  * @var string Base file that loaded the plugin.
  */
-define( 'TRIBE_EXTENSION_ADMIN_BAR_PLUS_FILE', __FILE__ );
+define( 'TEC_EXTENSION_ADMIN_BAR_PLUS_FILE', __FILE__ );
 
 /**
  * Register and load the service provider for loading the extension.
@@ -44,16 +44,16 @@ function tribe_extension_admin_bar_plus() {
 
 	// Register the namespace so we can the plugin on the service provider registration.
 	Tribe__Autoloader::instance()->register_prefix(
-		'\\Tribe\\Extensions\\Admin_Bar_Plus\\',
+		'\\Tec\\Extensions\\Admin_Bar_Plus\\',
 		__DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'Tec',
 		'admin-bar-plus'
 	);
 
 	// Deactivates the plugin in case of the main class didn't autoload.
-	if ( ! class_exists( '\Tribe\Extensions\Admin_Bar_Plus\Plugin' ) ) {
+	if ( ! class_exists( '\Tec\Extensions\Admin_Bar_Plus\Plugin' ) ) {
 		tribe_transient_notice(
 			'admin-bar-plus',
-			'<p>' . esc_html__( 'Couldn\'t properly load "The Events Calendar Extension: Admin Bar Plus" the extension was deactivated.', '__TRIBE_DOMAIN__' ) . '</p>',
+			'<p>' . esc_html__( 'Couldn\'t properly load "The Events Calendar Extension: Admin Bar Plus" the extension was deactivated.', 'tec-admin-bar-plus' ) . '</p>',
 			[],
 			// 1 second after that make sure the transient is removed.
 			1
@@ -67,7 +67,7 @@ function tribe_extension_admin_bar_plus() {
 		return;
 	}
 
-	tribe_register_provider( '\Tribe\Extensions\Admin_Bar_Plus\Plugin' );
+	tribe_register_provider( '\Tec\Extensions\Admin_Bar_Plus\Plugin' );
 }
 
 // Loads after common is already properly loaded.

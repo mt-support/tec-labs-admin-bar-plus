@@ -4,17 +4,19 @@
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  */
 
-namespace Tribe\Extensions\Admin_Bar_Plus;
+namespace Tec\Extensions\Admin_Bar_Plus;
+
+use Tribe__Dependency;
 
 /**
  * Class Plugin
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  */
 class Plugin extends \tad_DI52_ServiceProvider {
 	/**
@@ -24,7 +26,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const VERSION = '1.0.0';
+	const VERSION = '2.0.0';
 
 	/**
 	 * Stores the base slug for the plugin.
@@ -42,7 +44,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const FILE = TRIBE_EXTENSION_ADMIN_BAR_PLUS_FILE;
+	const FILE = TEC_EXTENSION_ADMIN_BAR_PLUS_FILE;
 
 	/**
 	 * @since 1.0.0
@@ -66,13 +68,49 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	public $plugin_url;
 
 	/**
+	 * Is The Events Calendar active. If yes, we will add some extra functionality.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return bool
+	 */
+	public $tec_active = false;
+
+	/**
+	 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
+	 *
 	 * @since 1.0.0
 	 *
-	 * @var Settings
-	 *
-	 * TODO: Remove if not using settings
+	 * @return bool
 	 */
-	private $settings;
+	public $ecp_active = false;
+
+	/**
+	 * Is Event Tickets active. If yes, we will add some extra functionality.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return bool
+	 */
+	public $et_active = false;
+
+	/**
+	 * Is Filter Bar active. If yes, we will add some extra functionality.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
+	 */
+	public $fb_active = false;
+
+	/**
+	 * Is Community Events active. If yes, we will add some extra functionality.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return bool
+	 */
+	public $ce_active = false;
 
 	/**
 	 * Setup the Extension's properties.
@@ -93,19 +131,17 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		$this->container->singleton( 'extension.admin_bar_plus.plugin', $this );
 		$this->container->register( PUE::class );
 
-		if ( ! $this->check_plugin_dependencies() ) {
+		/*if ( ! $this->check_plugin_dependencies() ) {
 			// If the plugin dependency manifest is not met, then bail and stop here.
 			return;
-		}
-
-		// Do the settings.
-		// TODO: Remove if not using settings
-		$this->get_settings();
+		}*/
 
 		// Start binds.
+		add_action( 'tribe_plugins_loaded', [ $this, 'detect_tribe_plugins' ], 0 );
 
-
-
+		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items_tec_events' ], 100 );
+		add_action( 'admin_bar_menu', [ $this, 'add_toolbar_items_tec_tickets' ], 1999 );
+		add_action( 'init', [ $this, 'launch_admin_menu' ] );
 		// End binds.
 
 		$this->container->register( Hooks::class );
@@ -139,61 +175,506 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Get this plugin's options prefix.
+	 * Check required plugins after all Tribe plugins have loaded.
 	 *
-	 * Settings_Helper will append a trailing underscore before each option.
-	 *
-	 * @return string
-     *
-	 * @see \Tribe\Extensions\Admin_Bar_Plus\Settings::set_options_prefix()
-	 *
-	 * TODO: Remove if not using settings
+	 * Useful for conditionally-requiring a Tribe plugin, whether to add extra functionality
+	 * or require a certain version but only if it is active.
 	 */
-	private function get_options_prefix() {
-		return (string) str_replace( '-', '_', 'tribe-ext-admin-bar-plus' );
+	public function detect_tribe_plugins() {
+		/** @var Tribe__Dependency $dep */
+		$dep = tribe( Tribe__Dependency::class );
+
+		if ( $dep->is_plugin_active( 'Tribe__Events__Main' ) ) {
+			$this->tec_active = true;
+		}
+		if ( $dep->is_plugin_active( 'Tribe__Events__Pro__Main' ) ) {
+			$this->ecp_active = true;
+		}
+		if ( $dep->is_plugin_active( 'Tribe__Tickets__Main' ) ) {
+			$this->et_active = true;
+		}
+		if ( $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' ) ) {
+			$this->fb_active = true;
+		}
+		if ( $dep->is_plugin_active( 'Tribe__Events__Community__Main' ) ) {
+			$this->ce_active = true;
+		}
 	}
 
 	/**
-	 * Get Settings instance.
+	 * Add our custom menu items, as applicable.
 	 *
-	 * @return Settings
-	 *
-	 * TODO: Remove if not using settings
+	 * @param \WP_Admin_Bar $admin_bar
 	 */
-	private function get_settings() {
-		if ( empty( $this->settings ) ) {
-			$this->settings = new Settings( $this->get_options_prefix() );
+	public function add_toolbar_items_tec_events( $admin_bar ) {
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-general',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'General', 'tribe-common' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=general',
+				'meta'   => [
+					'title' => __( 'General', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-display',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Display', 'tribe-common' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=display',
+				'meta'   => [
+					'title' => __( 'Display', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$this->maybe_add_toolbar_items_ecp( $admin_bar );
+
+		$this->maybe_add_toolbar_items_ce( $admin_bar );
+
+		$this->maybe_add_toolbar_items_filterbar( $admin_bar );
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-licenses',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Licenses', 'tribe-common' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=licenses',
+				'meta'   => [
+					'title' => __( 'Licenses', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-apis',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Integrations', 'tribe-common' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=addons',
+				'meta'   => [
+					'title' => __( 'Integrations', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-imports',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Imports', 'the-events-calendar' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=imports',
+				'meta'   => [
+					'title' => __( 'Imports', 'the-events-calendar' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add Event Tickets' custom menu items.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function add_toolbar_items_et( $admin_bar ) {
+		if ( ! $this->et_active ) {
+			return;
 		}
 
-		return $this->settings;
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-tickets',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Tickets', 'event-tickets' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=event-tickets',
+				'meta'   => [
+					'title' => __( 'Tickets', 'event-tickets' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
 	}
 
 	/**
-	 * Get all of this extension's options.
+	 * Add Events Calendar Pro's custom menu items.
 	 *
-	 * @return array
-	 *
-	 * TODO: Remove if not using settings
+	 * @param \WP_Admin_Bar $admin_bar
 	 */
-	public function get_all_options() {
-		$settings = $this->get_settings();
+	public function maybe_add_toolbar_items_ecp( $admin_bar ) {
+		if ( ! $this->ecp_active ) {
+			return;
+		}
 
-		return $settings->get_all_options();
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-default-content',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Default Content', 'tribe-events-calendar-pro' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=defaults',
+				'meta'   => [
+					'title' => __( 'Default Content', 'tribe-events-calendar-pro' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-additional-fields',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=additional-fields',
+				'meta'   => [
+					'title' => __( 'Additional Fields', 'tribe-events-calendar-pro' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
 	}
 
 	/**
-	 * Get a specific extension option.
+	 * Add Community Events' custom menu items.
 	 *
-	 * @param $option
-	 * @param string $default
-	 *
-	 * @return array
-	 *
-	 * TODO: Remove if not using settings
+	 * @param \WP_Admin_Bar $admin_bar
 	 */
-	public function get_option( $option, $default = '' ) {
-		$settings = $this->get_settings();
+	public function maybe_add_toolbar_items_ce( $admin_bar ) {
+		if ( ! $this->ce_active ) {
+			return;
+		}
 
-		return $settings->get_option( $option, $default );
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-community',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Community', 'tribe-events-community' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=community',
+				'meta'   => [
+					'title' => __( 'Community', 'tribe-events-community' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add Filter Bar's custom menu items.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function maybe_add_toolbar_items_filterbar( $admin_bar ) {
+		if ( ! $this->fb_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-events-settings-filters',
+				'parent' => 'tribe-events-settings',
+				'title'  => __( 'Filters', 'tribe-common' ),
+				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=filter-view',
+				'meta'   => [
+					'title' => __( 'Filters', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add our custom menu items, as applicable.
+	 *
+	 * @param \WP_Admin_Bar $admin_bar
+	 */
+	public function add_toolbar_items_tec_tickets( $admin_bar ) {
+
+		if ( ! $this->et_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets',
+				'parent' => false,
+				'title'  => __( 'Tickets', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets',
+				'meta'   => [
+					'title' => __( 'Tickets', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Settings', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=general',
+				'meta'   => [
+					'title' => __( 'Settings', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-general',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'General', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
+				'meta'   => [
+					'title' => __( 'General', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-payments',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Payments', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=payments',
+				'meta'   => [
+					'title' => __( 'Payments', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		if ( tribe_get_option( 'tickets_commerce_enabled' ) ) {
+			$admin_bar->add_menu(
+				[
+					'id'     => 'tribe-tickets-settings-payments-stripe',
+					'parent' => 'tribe-tickets-settings',
+					'title'  => '&#8594; ' . __( 'Stripe', 'tribe-common' ),
+					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
+					'meta'   => [
+						'title' => __( 'Stripe', 'tribe-common' ),
+						'class' => 'my_menu_item_class',
+					],
+				]
+			);
+
+			$admin_bar->add_menu(
+				[
+					'id'     => 'tribe-tickets-settings-payments-paypal',
+					'parent' => 'tribe-tickets-settings',
+					'title'  => '&#8594; ' . __( 'PayPal', 'tribe-common' ),
+					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
+					'meta'   => [
+						'title' => __( 'PayPal', 'tribe-common' ),
+						'class' => 'my_menu_item_class',
+					],
+				]
+			);
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-licenses',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Licenses', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=licenses',
+				'meta'   => [
+					'title' => __( 'Licenses', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add menu items based on active plugin.
+	 *
+	 * @since 2.0.0
+	 *
+	 * @return void
+	 */
+	public function launch_admin_menu() {
+
+		if ( $this->tec_active ) {
+			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ], 10 );
+		}
+
+		if ( $this->et_active ) {
+			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 9 );
+		}
+	}
+
+	/**
+	 * Add TEC submenu items.
+	 */
+	public function add_tec_submenu_items() {
+		$admin_pages = tribe( 'admin.pages' );
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-2',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => esc_html__( 'Settings', 'tribe-common' ),
+				'path'     => 'tec-events-settings',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-general',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'General', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=general',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-display',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Display', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=display',
+			]
+		);
+
+		if ( $this->ecp_active ) {
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-pro-settings-defaults',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Default Content', 'tribe-events-calendar-pro' ),
+					'path'     => 'tec-events-settings&tab=defaults',
+				]
+			);
+
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-pro-settings-additional-fields',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Additional Fields', 'tribe-events-calendar-pro' ),
+					'path'     => 'tec-events-settings&tab=additional-fields',
+				]
+			);
+		}
+
+		if ( $this->ce_active ) {
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-community-settings-community',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Community', 'tribe-events-community' ),
+					'path'     => 'tec-events-settings&tab=community',
+				]
+			);
+		}
+
+		if ( $this->fb_active ) {
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-events-filterbar-settings-filterbar',
+					'parent'   => 'edit.php?post_type=tribe_events',
+					'title'    => '&#8594; ' . esc_html__( 'Filters', 'tribe-common' ),
+					'path'     => 'tec-events-settings&tab=filter-view',
+				]
+			);
+		}
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-licenses',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=licenses',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-integrations',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Integrations', 'tribe-common' ),
+				'path'     => 'tec-events-settings&tab=addons',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-settings-imports',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Imports', 'the-events-calendar' ),
+				'path'     => 'tec-events-settings&tab=imports',
+			]
+		);
+	}
+
+	/**
+	 * Add Tickets submenu items.
+	 */
+	public function add_tickets_submenu_items() {
+		$admin_pages = tribe( 'admin.pages' );
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-settings-2',
+				'parent'   => 'tec-tickets',
+				'title'    => esc_html__( 'Settings', 'the-events-calendar' ),
+				'path'     => 'tec-tickets-settings',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-general',
+				'parent'   => 'tec-tickets',
+				'title'    => '&#8594; ' . esc_html__( 'General', 'the-events-calendar' ),
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-payments',
+				'parent'   => 'tec-tickets',
+				'title'    => '&#8594; ' . esc_html__( 'Payments', 'the-events-calendar' ),
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=payments',
+			]
+		);
+
+		if ( tribe_get_option( 'tickets_commerce_enabled' ) ) {
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-tickets-payments-stripe',
+					'parent'   => 'tec-tickets',
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'Stripe', 'the-events-calendar' ),
+					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
+				]
+			);
+
+			$admin_pages->register_page(
+				[
+					'id'       => 'tec-tickets-payments-paypal',
+					'parent'   => 'tec-tickets',
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'Paypal', 'the-events-calendar' ),
+					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
+				]
+			);
+		}
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-licenses',
+				'parent'   => 'tec-tickets',
+				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'the-events-calendar' ),
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=licenses',
+			]
+		);
 	}
 }

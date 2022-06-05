@@ -10,17 +10,17 @@
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  */
 
-namespace Tribe\Extensions\Admin_Bar_Plus;
+namespace Tec\Extensions\Admin_Bar_Plus;
 
 /**
  * Register Assets.
  *
  * @since 1.0.0
  *
- * @package Tribe\Extensions\Admin_Bar_Plus
+ * @package Tec\Extensions\Admin_Bar_Plus
  */
 class Assets extends \tad_DI52_ServiceProvider {
 	/**
