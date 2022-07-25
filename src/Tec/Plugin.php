@@ -662,7 +662,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				[
 					'id'       => 'tec-tickets-payments-paypal',
 					'parent'   => 'tec-tickets',
-					'title'    => '&ndash;&#8594; ' . esc_html__( 'Paypal', 'the-events-calendar' ),
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'PayPal', 'the-events-calendar' ),
 					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
 				]
 			);
