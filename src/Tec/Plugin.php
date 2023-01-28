@@ -10,6 +10,7 @@
 namespace Tec\Extensions\Admin_Bar_Plus;
 
 use Tribe__Dependency;
+use WP_Admin_Bar;
 
 /**
  * Class Plugin
@@ -51,21 +52,21 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string Plugin Directory.
 	 */
-	public $plugin_dir;
+	public string $plugin_dir;
 
 	/**
 	 * @since 1.0.0
 	 *
 	 * @var string Plugin path.
 	 */
-	public $plugin_path;
+	public string $plugin_path;
 
 	/**
 	 * @since 1.0.0
 	 *
 	 * @var string Plugin URL.
 	 */
-	public $plugin_url;
+	public string $plugin_url;
 
 	/**
 	 * Is The Events Calendar active. If yes, we will add some extra functionality.
@@ -74,7 +75,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return bool
 	 */
-	public $tec_active = false;
+	public bool $tec_active = false;
 
 	/**
 	 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
@@ -83,7 +84,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return bool
 	 */
-	public $ecp_active = false;
+	public bool $ecp_active = false;
 
 	/**
 	 * Is Event Tickets active. If yes, we will add some extra functionality.
@@ -92,7 +93,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return bool
 	 */
-	public $et_active = false;
+	public bool $et_active = false;
 
 	/**
 	 * Is Event Tickets Plus active. If yes, we will add some extra functionality.
@@ -101,7 +102,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return bool
 	 */
-	public $etp_active = false;
+	public bool $etp_active = false;
 
 	/**
 	 * Is Filter Bar active. If yes, we will add some extra functionality.
@@ -110,7 +111,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return bool
 	 */
-	public $fb_active = false;
+	public bool $fb_active = false;
 
 	/**
 	 * Is Community Events active. If yes, we will add some extra functionality.
@@ -119,7 +120,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @return bool
 	 */
-	public $ce_active = false;
+	public bool $ce_active = false;
 
 	/**
 	 * Setup the Extension's properties.
@@ -216,9 +217,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Add our custom menu items, as applicable.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_items_tec_events( $admin_bar ) {
+	public function add_toolbar_items_tec_events( WP_Admin_Bar $admin_bar ) {
 
 		$admin_bar->add_menu(
 			[
@@ -295,9 +296,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Add Event Tickets' custom menu items.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_items_et( $admin_bar ) {
+	public function add_toolbar_items_et( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->et_active ) {
 			return;
 		}
@@ -319,9 +320,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Add Events Calendar Pro's custom menu items.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function maybe_add_toolbar_items_ecp( $admin_bar ) {
+	public function maybe_add_toolbar_items_ecp( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->ecp_active ) {
 			return;
 		}
@@ -356,9 +357,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Add Community Events' custom menu items.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function maybe_add_toolbar_items_ce( $admin_bar ) {
+	public function maybe_add_toolbar_items_ce( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->ce_active ) {
 			return;
 		}
@@ -380,9 +381,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Add Filter Bar's custom menu items.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function maybe_add_toolbar_items_filterbar( $admin_bar ) {
+	public function maybe_add_toolbar_items_filterbar( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->fb_active ) {
 			return;
 		}
@@ -404,9 +405,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	/**
 	 * Add our custom menu items, as applicable.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_items_tec_tickets( $admin_bar ) {
+	public function add_toolbar_items_tec_tickets( WP_Admin_Bar $admin_bar ) {
 
 		if ( ! $this->et_active ) {
 			return;
@@ -550,7 +551,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	public function launch_admin_menu() {
 
 		if ( $this->tec_active ) {
-			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ], 10 );
+			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ] );
 		}
 
 		if ( $this->et_active ) {
