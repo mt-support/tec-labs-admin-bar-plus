@@ -294,30 +294,6 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	}
 
 	/**
-	 * Add Event Tickets' custom menu items.
-	 *
-	 * @param WP_Admin_Bar $admin_bar
-	 */
-	public function add_toolbar_items_et( WP_Admin_Bar $admin_bar ) {
-		if ( ! $this->et_active ) {
-			return;
-		}
-
-		$admin_bar->add_menu(
-			[
-				'id'     => 'tribe-events-settings-tickets',
-				'parent' => 'tribe-events-settings',
-				'title'  => __( 'Tickets', 'event-tickets' ),
-				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=event-tickets',
-				'meta'   => [
-					'title' => __( 'Tickets', 'event-tickets' ),
-					'class' => 'my_menu_item_class',
-				],
-			]
-		);
-	}
-
-	/**
 	 * Add Events Calendar Pro's custom menu items.
 	 *
 	 * @param WP_Admin_Bar $admin_bar
