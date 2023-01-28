@@ -515,9 +515,22 @@ class Plugin extends \tad_DI52_ServiceProvider {
 
 		$admin_bar->add_menu(
 			[
+				'id'     => 'tribe-tickets-settings-attendee-registration',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Attendee Registration', 'event-tickets-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+				'meta'   => [
+					'title' => __( 'Attendee Registration', 'event-tickets-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
 				'id'     => 'tribe-tickets-settings-integrations',
 				'parent' => 'tribe-tickets-settings',
-				'title'  => __( 'Integrations', 'tribe-common' ),
+				'title'  => __( 'Integrations', 'event-tickets-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
 				'meta'   => [
 					'title' => __( 'Integrations', 'event-tickets-plus' ),
@@ -702,6 +715,15 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		}
 
 		if ( $this->etp_active ) {
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-integrations',
+					'parent' => 'tec-tickets',
+					'title'  => '&#8594; ' . esc_html__( 'Attendee Registration', 'event-tickets-plus' ),
+					'path'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
+				]
+			);
+
 			$admin_pages->register_page(
 				[
 					'id'     => 'tec-tickets-integrations',
