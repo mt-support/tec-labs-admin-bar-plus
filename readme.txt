@@ -39,8 +39,8 @@ We're always interested in your feedback and our [Help Desk](https://support.the
 
 = [2.1.0] 2023-01-28 =
 
-* Switched to the new extension codebase.
 * Feature - Added submenu items related to Event Tickets Plus functionality.
+* Fix - Fixed PayPal typo.
 * Fix - Fixed text domains.
 * Fix - Added missing type declarations.
 * Misc - Removed some unused code.
