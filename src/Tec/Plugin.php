@@ -686,6 +686,15 @@ class Plugin extends \tad_DI52_ServiceProvider {
 
 		$admin_pages->register_page(
 			[
+				'id'       => 'tec-tickets-integrations',
+				'parent'   => 'tec-tickets',
+				'title'    => '&#8594; ' . esc_html__( 'Integrations', 'the-events-calendar' ),
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=integrations',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
 				'id'       => 'tec-tickets-licenses',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'the-events-calendar' ),
