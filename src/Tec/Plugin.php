@@ -95,6 +95,15 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	public $et_active = false;
 
 	/**
+	 * Is Event Tickets Plus active. If yes, we will add some extra functionality.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @return bool
+	 */
+	public $etp_active = false;
+
+	/**
 	 * Is Filter Bar active. If yes, we will add some extra functionality.
 	 *
 	 * @since 1.0.0
