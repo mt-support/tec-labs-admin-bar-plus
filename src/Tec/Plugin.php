@@ -492,18 +492,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			);
 		}
 
-		$admin_bar->add_menu(
-			[
-				'id'     => 'tribe-tickets-settings-integrations',
-				'parent' => 'tribe-tickets-settings',
-				'title'  => __( 'Integrations', 'tribe-common' ),
-				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
-				'meta'   => [
-					'title' => __( 'Integrations', 'event-tickets-plus' ),
-					'class' => 'my_menu_item_class',
-				],
-			]
-		);
+		$this->maybe_add_toolbar_items_etp( $admin_bar );
 
 		$admin_bar->add_menu(
 			[
@@ -513,6 +502,25 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=licenses',
 				'meta'   => [
 					'title' => __( 'Licenses', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	public function maybe_add_toolbar_items_etp( $admin_bar ) {
+		if ( ! $this->etp_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-integrations',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Integrations', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+				'meta'   => [
+					'title' => __( 'Integrations', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -693,14 +701,16 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			);
 		}
 
-		$admin_pages->register_page(
-			[
-				'id'       => 'tec-tickets-integrations',
-				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'Integrations', 'event-tickets-plus' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=integrations',
-			]
-		);
+		if ( $this->etp_active ) {
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-integrations',
+					'parent' => 'tec-tickets',
+					'title'  => '&#8594; ' . esc_html__( 'Integrations', 'event-tickets-plus' ),
+					'path'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+				]
+			);
+		}
 
 		$admin_pages->register_page(
 			[
