@@ -193,6 +193,9 @@ class Plugin extends \tad_DI52_ServiceProvider {
 		if ( $dep->is_plugin_active( 'Tribe__Tickets__Main' ) ) {
 			$this->et_active = true;
 		}
+		if ( $dep->is_plugin_active( 'Tribe__Tickets_Plus__Main' ) ) {
+			$this->etp_active = true;
+		}
 		if ( $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' ) ) {
 			$this->fb_active = true;
 		}
