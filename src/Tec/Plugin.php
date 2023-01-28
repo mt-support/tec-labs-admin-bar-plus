@@ -215,10 +215,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-events-settings-general',
 				'parent' => 'tribe-events-settings',
-				'title'  => __( 'General', 'tribe-common' ),
+				'title'  => __( 'General', 'the-events-calendar' ),
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=general',
 				'meta'   => [
-					'title' => __( 'General', 'tribe-common' ),
+					'title' => __( 'General', 'the-events-calendar' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -228,10 +228,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-events-settings-display',
 				'parent' => 'tribe-events-settings',
-				'title'  => __( 'Display', 'tribe-common' ),
+				'title'  => __( 'Display', 'the-events-calendar' ),
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=display',
 				'meta'   => [
-					'title' => __( 'Display', 'tribe-common' ),
+					'title' => __( 'Display', 'the-events-calendar' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -260,10 +260,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-events-settings-apis',
 				'parent' => 'tribe-events-settings',
-				'title'  => __( 'Integrations', 'tribe-common' ),
+				'title'  => __( 'Integrations', 'the-events-calendar' ),
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=addons',
 				'meta'   => [
-					'title' => __( 'Integrations', 'tribe-common' ),
+					'title' => __( 'Integrations', 'the-events-calendar' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -407,10 +407,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-tickets',
 				'parent' => false,
-				'title'  => __( 'Tickets', 'tribe-common' ),
+				'title'  => __( 'Tickets', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets',
 				'meta'   => [
-					'title' => __( 'Tickets', 'tribe-common' ),
+					'title' => __( 'Tickets', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -420,10 +420,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-tickets-settings',
 				'parent' => 'tribe-tickets',
-				'title'  => __( 'Settings', 'tribe-common' ),
+				'title'  => __( 'Settings', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=general',
 				'meta'   => [
-					'title' => __( 'Settings', 'tribe-common' ),
+					'title' => __( 'Settings', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -433,10 +433,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-tickets-settings-general',
 				'parent' => 'tribe-tickets-settings',
-				'title'  => __( 'General', 'tribe-common' ),
+				'title'  => __( 'General', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
 				'meta'   => [
-					'title' => __( 'General', 'tribe-common' ),
+					'title' => __( 'General', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -446,10 +446,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'     => 'tribe-tickets-settings-payments',
 				'parent' => 'tribe-tickets-settings',
-				'title'  => __( 'Payments', 'tribe-common' ),
+				'title'  => __( 'Payments', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=payments',
 				'meta'   => [
-					'title' => __( 'Payments', 'tribe-common' ),
+					'title' => __( 'Payments', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -460,10 +460,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				[
 					'id'     => 'tribe-tickets-settings-payments-stripe',
 					'parent' => 'tribe-tickets-settings',
-					'title'  => '&#8594; ' . __( 'Stripe', 'tribe-common' ),
+					'title'  => '&#8594; ' . __( 'Stripe', 'event-tickets' ),
 					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
 					'meta'   => [
-						'title' => __( 'Stripe', 'tribe-common' ),
+						'title' => __( 'Stripe', 'event-tickets' ),
 						'class' => 'my_menu_item_class',
 					],
 				]
@@ -473,10 +473,10 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				[
 					'id'     => 'tribe-tickets-settings-payments-paypal',
 					'parent' => 'tribe-tickets-settings',
-					'title'  => '&#8594; ' . __( 'PayPal', 'tribe-common' ),
+					'title'  => '&#8594; ' . __( 'PayPal', 'event-tickets' ),
 					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
 					'meta'   => [
-						'title' => __( 'PayPal', 'tribe-common' ),
+						'title' => __( 'PayPal', 'event-tickets' ),
 						'class' => 'my_menu_item_class',
 					],
 				]
@@ -490,7 +490,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				'title'  => __( 'Integrations', 'tribe-common' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
 				'meta'   => [
-					'title' => __( 'Integrations', 'tribe-common' ),
+					'title' => __( 'Integrations', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -547,7 +547,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-events-settings-general',
 				'parent'   => 'edit.php?post_type=tribe_events',
-				'title'    => '&#8594; ' . esc_html__( 'General', 'tribe-common' ),
+				'title'    => '&#8594; ' . esc_html__( 'General', 'the-events-calendar' ),
 				'path'     => 'tec-events-settings&tab=general',
 			]
 		);
@@ -556,7 +556,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-events-settings-display',
 				'parent'   => 'edit.php?post_type=tribe_events',
-				'title'    => '&#8594; ' . esc_html__( 'Display', 'tribe-common' ),
+				'title'    => '&#8594; ' . esc_html__( 'Display', 'the-events-calendar' ),
 				'path'     => 'tec-events-settings&tab=display',
 			]
 		);
@@ -641,7 +641,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-settings-2',
 				'parent'   => 'tec-tickets',
-				'title'    => esc_html__( 'Settings', 'the-events-calendar' ),
+				'title'    => esc_html__( 'Settings', 'event-tickets' ),
 				'path'     => 'tec-tickets-settings',
 			]
 		);
@@ -650,7 +650,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-general',
 				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'General', 'the-events-calendar' ),
+				'title'    => '&#8594; ' . esc_html__( 'General', 'event-tickets' ),
 				'path'     => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
 			]
 		);
@@ -659,7 +659,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-payments',
 				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'Payments', 'the-events-calendar' ),
+				'title'    => '&#8594; ' . esc_html__( 'Payments', 'event-tickets' ),
 				'path'     => 'admin.php?page=tec-tickets-settings&tab=payments',
 			]
 		);
@@ -669,7 +669,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				[
 					'id'       => 'tec-tickets-payments-stripe',
 					'parent'   => 'tec-tickets',
-					'title'    => '&ndash;&#8594; ' . esc_html__( 'Stripe', 'the-events-calendar' ),
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'Stripe', 'event-tickets' ),
 					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
 				]
 			);
@@ -678,7 +678,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 				[
 					'id'       => 'tec-tickets-payments-paypal',
 					'parent'   => 'tec-tickets',
-					'title'    => '&ndash;&#8594; ' . esc_html__( 'PayPal', 'the-events-calendar' ),
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'PayPal', 'event-tickets' ),
 					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
 				]
 			);
@@ -688,7 +688,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-integrations',
 				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'Integrations', 'the-events-calendar' ),
+				'title'    => '&#8594; ' . esc_html__( 'Integrations', 'event-tickets-plus' ),
 				'path'     => 'admin.php?page=tec-tickets-settings&tab=integrations',
 			]
 		);
@@ -697,7 +697,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 			[
 				'id'       => 'tec-tickets-licenses',
 				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'the-events-calendar' ),
+				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'tribe-common' ),
 				'path'     => 'admin.php?page=tec-tickets-settings&tab=licenses',
 			]
 		);
