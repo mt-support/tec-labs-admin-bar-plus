@@ -485,6 +485,19 @@ class Plugin extends \tad_DI52_ServiceProvider {
 
 		$admin_bar->add_menu(
 			[
+				'id'     => 'tribe-tickets-settings-integrations',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Integrations', 'tribe-common' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+				'meta'   => [
+					'title' => __( 'Integrations', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
 				'id'     => 'tribe-tickets-settings-licenses',
 				'parent' => 'tribe-tickets-settings',
 				'title'  => __( 'Licenses', 'tribe-common' ),
