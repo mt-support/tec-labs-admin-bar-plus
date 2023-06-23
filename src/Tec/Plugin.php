@@ -10,6 +10,7 @@
 namespace Tec\Extensions\Admin_Bar_Plus;
 
 use Tribe__Dependency;
+use TEC\Common\Contract\Service_Provider;
 
 /**
  * Class Plugin
@@ -18,7 +19,7 @@ use Tribe__Dependency;
  *
  * @package Tec\Extensions\Admin_Bar_Plus
  */
-class Plugin extends \tad_DI52_ServiceProvider {
+class Plugin extends Service_Provider {
 	/**
 	 * Stores the version for the plugin.
 	 *
@@ -26,7 +27,7 @@ class Plugin extends \tad_DI52_ServiceProvider {
 	 *
 	 * @var string
 	 */
-	const VERSION = '2.0.0';
+	const VERSION = '2.1.0';
 
 	/**
 	 * Stores the base slug for the plugin.

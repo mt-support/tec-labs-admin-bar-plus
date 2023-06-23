@@ -22,6 +22,7 @@
 namespace Tec\Extensions\Admin_Bar_Plus;
 
 use Tribe__Main as Common;
+use TEC\Common\Contract\Service_Provider;
 
 /**
  * Class Hooks.
@@ -30,7 +31,7 @@ use Tribe__Main as Common;
  *
  * @package Tec\Extensions\Admin_Bar_Plus;
  */
-class Hooks extends \tad_DI52_ServiceProvider {
+class Hooks extends Service_Provider {
 
 	/**
 	 * Binds and sets up implementations.
