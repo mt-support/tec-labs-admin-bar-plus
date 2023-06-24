@@ -9,6 +9,7 @@
 
 namespace Tec\Extensions\Admin_Bar_Plus;
 
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__PUE__Checker;
 
 /**
@@ -18,7 +19,7 @@ use Tribe__PUE__Checker;
  *
  * @package Tec\Extensions\Admin_Bar_Plus;
  */
-class PUE extends \tad_DI52_ServiceProvider {
+class PUE extends Service_Provider {
 
 	/**
 	 * The slug used for PUE.
