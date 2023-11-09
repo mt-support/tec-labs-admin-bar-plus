@@ -9,6 +9,7 @@
 
 namespace Tec\Extensions\Admin_Bar_Plus;
 
+use TEC\Common\Contracts\Service_Provider;
 use Tribe__Dependency;
 use WP_Admin_Bar;
 
@@ -19,7 +20,7 @@ use WP_Admin_Bar;
  *
  * @package Tec\Extensions\Admin_Bar_Plus
  */
-class Plugin extends \tad_DI52_ServiceProvider {
+class Plugin extends Service_Provider {
 	/**
 	 * Stores the version for the plugin.
 	 *

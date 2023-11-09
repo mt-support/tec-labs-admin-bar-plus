@@ -37,13 +37,17 @@ We're always interested in your feedback and our [Help Desk](https://support.the
 
 == Changelog ==
 
-= [2.1.0] 2023-01-28 =
+= [2.1.0] 2023-11-09 =
 
 * Feature - Added submenu items related to Event Tickets Plus functionality.
 * Fix - Fixed PayPal typo.
 * Fix - Fixed text domains.
 * Fix - Added missing type declarations.
 * Misc - Removed some unused code.
+
+= [2.0.1] 2023-06-24 =
+
+* Fix - Update to use the new Service_Provider contract in common.
 
 = [2.0.0] 2022-06-05 =
 
