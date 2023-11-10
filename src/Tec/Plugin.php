@@ -692,6 +692,15 @@ class Plugin extends Service_Provider {
 			);
 		}
 
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-emails',
+				'parent'   => 'tec-tickets',
+				'title'    => '&#8594; ' . esc_html__( 'Emails', 'event-tickets' ),
+				'path'     => 'admin.php?page=tec-tickets-settings&tab=emails',
+			]
+		);
+
 		if ( $this->etp_active ) {
 			$admin_pages->register_page(
 				[
