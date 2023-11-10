@@ -106,6 +106,15 @@ class Plugin extends Service_Provider {
 	public bool $etp_active = false;
 
 	/**
+	 * Is Event Tickets Wallet Plus active. If yes, we will add some extra functionality.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @return bool
+	 */
+	public bool $etwp_active = false;
+
+	/**
 	 * Is Filter Bar active. If yes, we will add some extra functionality.
 	 *
 	 * @since 1.0.0
@@ -206,6 +215,9 @@ class Plugin extends Service_Provider {
 		}
 		if ( $dep->is_plugin_active( 'Tribe__Tickets_Plus__Main' ) ) {
 			$this->etp_active = true;
+		}
+		if ( $dep->is_plugin_active( '\TEC\Tickets_Wallet_Plus\Plugin' ) ) {
+			$this->etwp_active = true;
 		}
 		if ( $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' ) ) {
 			$this->fb_active = true;
@@ -708,6 +720,16 @@ class Plugin extends Service_Provider {
 					'parent' => 'tec-tickets',
 					'title'  => '&#8594; ' . esc_html__( 'Attendee Registration', 'event-tickets-plus' ),
 					'path'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
+				]
+			);
+
+		if ( $this->etwp_active ) {
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-wallet-plus',
+					'parent' => 'tec-tickets',
+					'title'  => '&#8594; ' . esc_html__( 'Walled Plus', 'event-tickets-wallet-plus' ),
+					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
 				]
 			);
 
