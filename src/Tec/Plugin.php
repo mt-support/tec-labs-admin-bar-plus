@@ -722,17 +722,20 @@ class Plugin extends Service_Provider {
 					'path'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
 				]
 			);
+		}
 
 		if ( $this->etwp_active ) {
 			$admin_pages->register_page(
 				[
 					'id'     => 'tec-tickets-wallet-plus',
 					'parent' => 'tec-tickets',
-					'title'  => '&#8594; ' . esc_html__( 'Walled Plus', 'event-tickets-wallet-plus' ),
+					'title'  => '&#8594; ' . esc_html__( 'Wallet Plus', 'event-tickets-wallet-plus' ),
 					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
 				]
 			);
+		}
 
+		if ( $this->etp_active ) {
 			$admin_pages->register_page(
 				[
 					'id'     => 'tec-tickets-integrations',
