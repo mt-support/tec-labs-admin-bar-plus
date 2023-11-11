@@ -204,27 +204,19 @@ class Plugin extends Service_Provider {
 		/** @var Tribe__Dependency $dep */
 		$dep = tribe( Tribe__Dependency::class );
 
-		if ( $dep->is_plugin_active( 'Tribe__Events__Main' ) ) {
-			$this->tec_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Events__Pro__Main' ) ) {
-			$this->ecp_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Tickets__Main' ) ) {
-			$this->et_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Tickets_Plus__Main' ) ) {
-			$this->etp_active = true;
-		}
-		if ( $dep->is_plugin_active( '\TEC\Tickets_Wallet_Plus\Plugin' ) ) {
-			$this->etwp_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' ) ) {
-			$this->fb_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Events__Community__Main' ) ) {
-			$this->ce_active = true;
-		}
+		$this->tec_active = $dep->is_plugin_active( 'Tribe__Events__Main' );
+
+		$this->ecp_active = $dep->is_plugin_active( 'Tribe__Events__Pro__Main' );
+
+		$this->et_active = $dep->is_plugin_active( 'Tribe__Tickets__Main' );
+
+		$this->etp_active = $dep->is_plugin_active( 'Tribe__Tickets_Plus__Main' );
+
+		$this->etwp_active = $dep->is_plugin_active( '\TEC\Tickets_Wallet_Plus\Plugin' );
+
+		$this->fb_active = $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' );
+
+		$this->ce_active = $dep->is_plugin_active( 'Tribe__Events__Community__Main' );
 	}
 
 	/**
