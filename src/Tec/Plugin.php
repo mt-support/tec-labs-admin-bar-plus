@@ -601,7 +601,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-wallet-plus-apple-wallet',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => '&#8594; ' . __( 'Apple Wallet', 'event-tickets-wallet-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
 				'meta'   => [
@@ -614,7 +614,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-wallet-plus-pdf-tickets',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => '&#8594; ' . __( 'PDF Tickets', 'event-tickets-wallet-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet&section=pdf-tickets',
 				'meta'   => [
