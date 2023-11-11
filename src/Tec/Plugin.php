@@ -553,7 +553,7 @@ class Plugin extends Service_Provider {
 	 * @since 2.1.0
 	 */
 	public function maybe_add_toolbar_item_integrations( WP_Admin_Bar $admin_bar ) {
-		if ( ! $this->etp_active ) {
+		if ( ! $this->etp_active && ! $this->etwp_active ) {
 			return;
 		}
 
@@ -848,7 +848,7 @@ class Plugin extends Service_Provider {
 			);
 		}
 
-		if ( $this->etp_active ) {
+		if ( $this->etp_active || $this->etwp_active ) {
 			$admin_pages->register_page(
 				[
 					'id'     => 'tec-tickets-integrations',
