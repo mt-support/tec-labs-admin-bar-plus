@@ -133,7 +133,7 @@ class Plugin extends Service_Provider {
 	public bool $ce_active = false;
 
 	/**
-	 * Setup the Extension's properties.
+	 * Set up the Extension's properties.
 	 *
 	 * This always executes even if the required plugins are not present.
 	 *
@@ -175,7 +175,7 @@ class Plugin extends Service_Provider {
 	 *
 	 * @return bool Whether the plugin dependency manifest is satisfied or not.
 	 */
-	protected function check_plugin_dependencies() {
+	protected function check_plugin_dependencies(): bool {
 		$this->register_plugin_dependencies();
 
 		return tribe_check_plugin( static::class );
@@ -515,7 +515,16 @@ class Plugin extends Service_Provider {
 		);
 	}
 
-	public function maybe_add_toolbar_item_attendee_registration( $admin_bar ) {
+	/**
+	 * Add links to the Attendee Registration page to the admin bar menu, when ETP is active.
+	 *
+	 * @param WP_Admin_Bar $admin_bar
+	 *
+	 * @return void
+	 *
+	 * @since 2.1.0
+	 */
+	public function maybe_add_toolbar_item_attendee_registration( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->etp_active ) {
 			return;
 		}
@@ -534,7 +543,16 @@ class Plugin extends Service_Provider {
 		);
 	}
 
-	public function maybe_add_toolbar_item_integrations( $admin_bar ) {
+	/**
+	 * Add links to the Integrations page to the admin bar menu, when ETP is active.
+	 *
+	 * @param WP_Admin_Bar $admin_bar
+	 *
+	 * @return void
+	 *
+	 * @since 2.1.0
+	 */
+	public function maybe_add_toolbar_item_integrations( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->etp_active ) {
 			return;
 		}
@@ -553,7 +571,16 @@ class Plugin extends Service_Provider {
 		);
 	}
 
-	public function maybe_add_toolbar_items_etwp( $admin_bar ) {
+	/**
+	 * Add links to the Event Tickets Wallet Plus pages to the admin bar menu, when ETWP is active.
+	 *
+	 * @param WP_Admin_Bar $admin_bar
+	 *
+	 * @return void
+	 *
+	 * @since 2.1.0
+	 */
+	public function maybe_add_toolbar_items_etwp( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->etwp_active ) {
 			return;
 		}
