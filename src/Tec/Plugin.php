@@ -422,8 +422,16 @@ class Plugin extends Service_Provider {
 
 		$admin_bar->add_menu(
 			[
+				'id'     => 'tribe-tickets-div',
+				'parent' => 'tribe-tickets',
+				'title'  => '&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;',
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
 				'id'     => 'tribe-tickets-settings-general',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'General', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
 				'meta'   => [
@@ -436,7 +444,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-payments',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'Payments', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=payments',
 				'meta'   => [
@@ -450,7 +458,7 @@ class Plugin extends Service_Provider {
 			$admin_bar->add_menu(
 				[
 					'id'     => 'tribe-tickets-settings-payments-stripe',
-					'parent' => 'tribe-tickets-settings',
+					'parent' => 'tribe-tickets',
 					'title'  => '&#8594; ' . __( 'Stripe', 'event-tickets' ),
 					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
 					'meta'   => [
@@ -463,7 +471,7 @@ class Plugin extends Service_Provider {
 			$admin_bar->add_menu(
 				[
 					'id'     => 'tribe-tickets-settings-payments-paypal',
-					'parent' => 'tribe-tickets-settings',
+					'parent' => 'tribe-tickets',
 					'title'  => '&#8594; ' . __( 'PayPal', 'event-tickets' ),
 					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
 					'meta'   => [
@@ -477,7 +485,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-emails',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'Emails', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=emails',
 				'meta'   => [
@@ -496,7 +504,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-licenses',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'Licenses', 'tribe-common' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=licenses',
 				'meta'   => [
@@ -524,7 +532,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-attendee-registration',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'Attendee Registration', 'event-tickets-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
 				'meta'   => [
@@ -552,7 +560,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-integrations',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'Integrations', 'event-tickets-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
 				'meta'   => [
@@ -580,7 +588,7 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-wallet-plus',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'Wallet Plus', 'event-tickets-wallet-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
 				'meta'   => [
