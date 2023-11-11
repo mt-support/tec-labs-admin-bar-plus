@@ -733,6 +733,24 @@ class Plugin extends Service_Provider {
 					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
 				]
 			);
+
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-wallet-plus-apple-wallet-passes',
+					'parent' => 'tec-tickets',
+					'title'  => '&ndash;&#8594; ' . esc_html__( 'Apple Wallet', 'event-tickets-wallet-plus' ),
+					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
+				]
+			);
+
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-wallet-plus-pdf-tickets',
+					'parent' => 'tec-tickets',
+					'title'  => '&ndash;&#8594; ' . esc_html__( 'PDF Tickets', 'event-tickets-wallet-plus' ),
+					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet&section=pdf-tickets',
+				]
+			);
 		}
 
 		if ( $this->etp_active ) {
