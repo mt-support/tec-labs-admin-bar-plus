@@ -3,7 +3,7 @@ Contributors: theeventscalendar
 Donate link: https://evnt.is/29
 Tags: events, calendar
 Requires at least: 5.8.6
-Tested up to: 6.6.1
+Tested up to: 6.4.1
 Requires PHP: 7.4
 Stable tag: 2.1.0
 License: GPL version 3 or any later version
@@ -37,12 +37,17 @@ We're always interested in your feedback and our [Help Desk](https://support.the
 
 == Changelog ==
 
-= [2.1.0] 2023-11-09 =
+= [2.1.0] 2023-11-15 =
 
 * Feature - Added submenu items related to Event Tickets Plus functionality.
+* Feature - Added submenu items for the new Email settings tab in Event Tickets.
+* Feature - Added submenu items related to Event Tickets Wallet Plus functionality.
 * Fix - Fixed PayPal typo.
 * Fix - Fixed text domains.
-* Fix - Added missing type declarations.
+* Tweak - Moved submenu items to the main Tickets menu in the admin bar.
+* Tweak - Added missing type declarations.
+* Tweak - Added and adjusted docBlocks.
+* Tweak - Simplified the code.
 * Misc - Removed some unused code.
 
 = [2.0.1] 2023-06-24 =
