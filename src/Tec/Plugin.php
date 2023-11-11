@@ -497,6 +497,8 @@ class Plugin extends Service_Provider {
 
 		$this->maybe_add_toolbar_item_attendee_registration( $admin_bar );
 
+		$this->maybe_add_toolbar_items_etwp( $admin_bar );
+
 		$this->maybe_add_toolbar_item_integrations( $admin_bar );
 
 		$admin_bar->add_menu(
@@ -545,6 +547,51 @@ class Plugin extends Service_Provider {
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
 				'meta'   => [
 					'title' => __( 'Integrations', 'event-tickets-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	public function maybe_add_toolbar_items_etwp( $admin_bar ) {
+		if ( ! $this->etwp_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-wallet-plus',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Wallet Plus', 'event-tickets-wallet-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
+				'meta'   => [
+					'title' => __( 'Wallet Plus', 'event-tickets-wallet-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-wallet-plus-apple-wallet',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => '&#8594; ' . __( 'Apple Wallet', 'event-tickets-wallet-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
+				'meta'   => [
+					'title' => __( 'Apple Wallet', 'event-tickets-wallet-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-wallet-plus-pdf-tickets',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => '&#8594; ' . __( 'PDF Tickets', 'event-tickets-wallet-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet&section=pdf-tickets',
+				'meta'   => [
+					'title' => __( 'PDF Tickets', 'event-tickets-wallet-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
