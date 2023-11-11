@@ -523,7 +523,7 @@ class Plugin extends Service_Provider {
 				'id'     => 'tribe-tickets-settings-attendee-registration',
 				'parent' => 'tribe-tickets-settings',
 				'title'  => __( 'Attendee Registration', 'event-tickets-plus' ),
-				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
 				'meta'   => [
 					'title' => __( 'Attendee Registration', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
