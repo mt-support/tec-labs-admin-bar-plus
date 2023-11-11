@@ -482,7 +482,9 @@ class Plugin extends Service_Provider {
 			);
 		}
 
-		$this->maybe_add_toolbar_items_etp( $admin_bar );
+		$this->maybe_add_toolbar_item_attendee_registration( $admin_bar );
+
+		$this->maybe_add_toolbar_item_integrations( $admin_bar );
 
 		$admin_bar->add_menu(
 			[
@@ -498,7 +500,7 @@ class Plugin extends Service_Provider {
 		);
 	}
 
-	public function maybe_add_toolbar_items_etp( $admin_bar ) {
+	public function maybe_add_toolbar_item_attendee_registration( $admin_bar ) {
 		if ( ! $this->etp_active ) {
 			return;
 		}
@@ -515,6 +517,12 @@ class Plugin extends Service_Provider {
 				],
 			]
 		);
+	}
+
+	public function maybe_add_toolbar_item_integrations( $admin_bar ) {
+		if ( ! $this->etp_active ) {
+			return;
+		}
 
 		$admin_bar->add_menu(
 			[
