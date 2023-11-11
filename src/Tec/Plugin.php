@@ -482,6 +482,19 @@ class Plugin extends Service_Provider {
 			);
 		}
 
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-emails',
+				'parent' => 'tribe-tickets-settings',
+				'title'  => __( 'Emails', 'event-tickets' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=emails',
+				'meta'   => [
+					'title' => __( 'Emails', 'event-tickets' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
 		$this->maybe_add_toolbar_item_attendee_registration( $admin_bar );
 
 		$this->maybe_add_toolbar_item_integrations( $admin_bar );
