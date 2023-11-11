@@ -716,7 +716,7 @@ class Plugin extends Service_Provider {
 		if ( $this->etp_active ) {
 			$admin_pages->register_page(
 				[
-					'id'     => 'tec-tickets-integrations',
+					'id'     => 'tec-tickets-attendee-registration',
 					'parent' => 'tec-tickets',
 					'title'  => '&#8594; ' . esc_html__( 'Attendee Registration', 'event-tickets-plus' ),
 					'path'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
