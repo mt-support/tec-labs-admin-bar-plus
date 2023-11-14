@@ -651,6 +651,24 @@ class Plugin extends Service_Provider {
 
 		$admin_pages->register_page(
 			[
+				'id'       => 'tec-events-import-scheduled',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Scheduled', 'the-events-calendar' ),
+				'path'     => 'aggregator&post_type=tribe_events&tab=scheduled',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-import-history',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'History', 'the-events-calendar' ),
+				'path'     => 'aggregator&post_type=tribe_events&tab=history',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
 				'id'       => 'tec-events-settings-2',
 				'parent'   => 'edit.php?post_type=tribe_events',
 				'title'    => esc_html__( 'Settings', 'tribe-common' ),
