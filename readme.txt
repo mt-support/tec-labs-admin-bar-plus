@@ -44,6 +44,7 @@ We're always interested in your feedback and our [Help Desk](https://support.the
 * Feature - Added submenu items for the Import menu item in The Events Calendar.
 * Fix - Fixed PayPal typo.
 * Fix - Fixed text domains.
+* Fix - Added missing .pot file.
 * Tweak - Moved submenu items to the main Tickets menu in the admin bar.
 * Tweak - Added missing type declarations.
 * Tweak - Added and adjusted docBlocks.
