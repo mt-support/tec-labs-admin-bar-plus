@@ -1,0 +1,44 @@
+# Copyright (C) 2025 The Events Calendar
+# This file is distributed under the GPL version 3 or any later version.
+msgid ""
+msgstr ""
+"Project-Id-Version: The Events Calendar Extension: Admin Bar Plus 2.1.0\n"
+"Report-Msgid-Bugs-To: The Events Calendar <https://support.theeventscalendar.com/>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-02-19T11:35:29+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: tec-admin-bar-plus\n"
+
+#. Plugin Name of the plugin
+#: plugin.php
+msgid "The Events Calendar Extension: Admin Bar Plus"
+msgstr ""
+
+#. Plugin URI of the plugin
+#: plugin.php
+msgid "https://theeventscalendar.com/extensions/admin-bar-plus/"
+msgstr ""
+
+#. Description of the plugin
+#: plugin.php
+msgid "Adds quick links to the Events and Tickets settings pages to the admin bar and to the sidebar. The extension requires The Events Calendar 5.15.0 or higher, or Event Tickets 5.4.0 or higher."
+msgstr ""
+
+#. Author of the plugin
+#: plugin.php
+msgid "The Events Calendar"
+msgstr ""
+
+#. Author URI of the plugin
+#: plugin.php
+msgid "https://evnt.is/1971"
+msgstr ""
+
+#: plugin.php:56
+msgid "Couldn't properly load \"The Events Calendar Extension: Admin Bar Plus\" the extension was deactivated."
+msgstr ""
