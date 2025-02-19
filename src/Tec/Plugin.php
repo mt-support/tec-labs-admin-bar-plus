@@ -106,15 +106,6 @@ class Plugin extends Service_Provider {
 	public bool $etp_active = false;
 
 	/**
-	 * Is Event Tickets Wallet Plus active. If yes, we will add some extra functionality.
-	 *
-	 * @since 2.1.0
-	 *
-	 * @return bool
-	 */
-	public bool $etwp_active = false;
-
-	/**
 	 * Is Filter Bar active. If yes, we will add some extra functionality.
 	 *
 	 * @since 1.0.0
@@ -211,8 +202,6 @@ class Plugin extends Service_Provider {
 		$this->et_active = $dep->is_plugin_active( 'Tribe__Tickets__Main' );
 
 		$this->etp_active = $dep->is_plugin_active( 'Tribe__Tickets_Plus__Main' );
-
-		$this->etwp_active = $dep->is_plugin_active( '\TEC\Tickets_Wallet_Plus\Plugin' );
 
 		$this->fb_active = $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' );
 
@@ -495,11 +484,7 @@ class Plugin extends Service_Provider {
 			]
 		);
 
-		$this->maybe_add_toolbar_item_attendee_registration( $admin_bar );
-
-		$this->maybe_add_toolbar_items_etwp( $admin_bar );
-
-		$this->maybe_add_toolbar_item_integrations( $admin_bar );
+		$this->maybe_add_toolbar_items_etp( $admin_bar );
 
 		$admin_bar->add_menu(
 			[
@@ -516,7 +501,7 @@ class Plugin extends Service_Provider {
 	}
 
 	/**
-	 * Add links to the Attendee Registration page to the admin bar menu, when ETP is active.
+	 * Add links to the Event Tickets Wallet Plus pages to the admin bar menu, when ETWP is active.
 	 *
 	 * @param WP_Admin_Bar $admin_bar
 	 *
@@ -524,7 +509,7 @@ class Plugin extends Service_Provider {
 	 *
 	 * @since 2.1.0
 	 */
-	public function maybe_add_toolbar_item_attendee_registration( WP_Admin_Bar $admin_bar ) {
+	public function maybe_add_toolbar_items_etp( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->etp_active ) {
 			return;
 		}
@@ -541,49 +526,6 @@ class Plugin extends Service_Provider {
 				],
 			]
 		);
-	}
-
-	/**
-	 * Add links to the Integrations page to the admin bar menu, when ETP is active.
-	 *
-	 * @param WP_Admin_Bar $admin_bar
-	 *
-	 * @return void
-	 *
-	 * @since 2.1.0
-	 */
-	public function maybe_add_toolbar_item_integrations( WP_Admin_Bar $admin_bar ) {
-		if ( ! $this->etp_active && ! $this->etwp_active ) {
-			return;
-		}
-
-		$admin_bar->add_menu(
-			[
-				'id'     => 'tribe-tickets-settings-integrations',
-				'parent' => 'tribe-tickets',
-				'title'  => __( 'Integrations', 'event-tickets-plus' ),
-				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
-				'meta'   => [
-					'title' => __( 'Integrations', 'event-tickets-plus' ),
-					'class' => 'my_menu_item_class',
-				],
-			]
-		);
-	}
-
-	/**
-	 * Add links to the Event Tickets Wallet Plus pages to the admin bar menu, when ETWP is active.
-	 *
-	 * @param WP_Admin_Bar $admin_bar
-	 *
-	 * @return void
-	 *
-	 * @since 2.1.0
-	 */
-	public function maybe_add_toolbar_items_etwp( WP_Admin_Bar $admin_bar ) {
-		if ( ! $this->etwp_active && ! $this->etp_active ) {
-			return;
-		}
 
 		$admin_bar->add_menu(
 			[
@@ -619,6 +561,19 @@ class Plugin extends Service_Provider {
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet&section=pdf-tickets',
 				'meta'   => [
 					'title' => __( 'PDF Tickets', 'event-tickets-wallet-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-integrations',
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Integrations', 'event-tickets-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+				'meta'   => [
+					'title' => __( 'Integrations', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -837,7 +792,7 @@ class Plugin extends Service_Provider {
 			);
 		}
 
-		if ( $this->etwp_active || $this->etp_active ) {
+		if ( $this->etp_active ) {
 			$admin_pages->register_page(
 				[
 					'id'     => 'tec-tickets-wallet-plus',
@@ -866,7 +821,7 @@ class Plugin extends Service_Provider {
 			);
 		}
 
-		if ( $this->etp_active || $this->etwp_active ) {
+		if ( $this->etp_active ) {
 			$admin_pages->register_page(
 				[
 					'id'     => 'tec-tickets-integrations',
