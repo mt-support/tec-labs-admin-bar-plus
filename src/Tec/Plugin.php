@@ -501,7 +501,7 @@ class Plugin extends Service_Provider {
 	}
 
 	/**
-	 * Add links to the Event Tickets Wallet Plus pages to the admin bar menu, when ETWP is active.
+	 * Add links to the Event Tickets Plus pages to the admin bar menu, when ETP is active.
 	 *
 	 * @param WP_Admin_Bar $admin_bar
 	 *
@@ -529,7 +529,7 @@ class Plugin extends Service_Provider {
 
 		$admin_bar->add_menu(
 			[
-				'id'     => 'tribe-tickets-settings-wallet-plus',
+				'id'     => 'tribe-tickets-settings-wallet',
 				'parent' => 'tribe-tickets',
 				'title'  => __( 'Wallet & PDF', 'event-tickets-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
@@ -542,12 +542,12 @@ class Plugin extends Service_Provider {
 
 		$admin_bar->add_menu(
 			[
-				'id'     => 'tribe-tickets-settings-wallet-plus-apple-wallet',
+				'id'     => 'tribe-tickets-settings-wallet-apple-wallet',
 				'parent' => 'tribe-tickets',
-				'title'  => '&#8594; ' . __( 'Apple Wallet', 'event-tickets-wallet-plus' ),
+				'title'  => '&#8594; ' . __( 'Apple Wallet', 'event-tickets-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
 				'meta'   => [
-					'title' => __( 'Apple Wallet', 'event-tickets-wallet-plus' ),
+					'title' => __( 'Apple Wallet', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -555,12 +555,12 @@ class Plugin extends Service_Provider {
 
 		$admin_bar->add_menu(
 			[
-				'id'     => 'tribe-tickets-settings-wallet-plus-pdf-tickets',
+				'id'     => 'tribe-tickets-settings-wallet-pdf-tickets',
 				'parent' => 'tribe-tickets',
-				'title'  => '&#8594; ' . __( 'PDF Tickets', 'event-tickets-wallet-plus' ),
+				'title'  => '&#8594; ' . __( 'PDF Tickets', 'event-tickets-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet&section=pdf-tickets',
 				'meta'   => [
-					'title' => __( 'PDF Tickets', 'event-tickets-wallet-plus' ),
+					'title' => __( 'PDF Tickets', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -795,7 +795,7 @@ class Plugin extends Service_Provider {
 		if ( $this->etp_active ) {
 			$admin_pages->register_page(
 				[
-					'id'     => 'tec-tickets-wallet-plus',
+					'id'     => 'tec-tickets-wallet',
 					'parent' => 'tec-tickets',
 					'title'  => '&#8594; ' . esc_html__( 'Wallet & PDF', 'event-tickets-plus' ),
 					'path'   => 'tec-tickets-settings&tab=wallet',
@@ -804,7 +804,7 @@ class Plugin extends Service_Provider {
 
 			$admin_pages->register_page(
 				[
-					'id'     => 'tec-tickets-wallet-plus-apple-wallet-passes',
+					'id'     => 'tec-tickets-wallet-apple-wallet-passes',
 					'parent' => 'tec-tickets',
 					'title'  => '&ndash;&#8594; ' . esc_html__( 'Apple Wallet', 'event-tickets-plus' ),
 					'path'   => 'tec-tickets-settings&tab=wallet',
@@ -813,7 +813,7 @@ class Plugin extends Service_Provider {
 
 			$admin_pages->register_page(
 				[
-					'id'     => 'tec-tickets-wallet-plus-pdf-tickets',
+					'id'     => 'tec-tickets-wallet-pdf-tickets',
 					'parent' => 'tec-tickets',
 					'title'  => '&ndash;&#8594; ' . esc_html__( 'PDF Tickets', 'event-tickets-plus' ),
 					'path'   => 'tec-tickets-settings&tab=wallet&section=pdf-tickets',
