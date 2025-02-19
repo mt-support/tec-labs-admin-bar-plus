@@ -2,10 +2,10 @@
 Contributors: theeventscalendar
 Donate link: https://evnt.is/29
 Tags: events, calendar
-Requires at least: 5.0
-Tested up to: 6.0
+Requires at least: 5.8.6
+Tested up to: 6.7.2
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 License: GPL version 3 or any later version
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -36,6 +36,20 @@ Please visit our [extension library](https://theeventscalendar.com/extensions/) 
 We're always interested in your feedback and our [Help Desk](https://support.theeventscalendar.com/) are the best place to flag any issues. Do note, however, that the degree of support we provide for extensions like this one tends to be very limited.
 
 == Changelog ==
+
+= [2.1.0] 2025-02-19 =
+
+* Feature - Added submenu items related to Event Tickets Plus functionality.
+* Feature - Added submenu items for the new Email settings tab in Event Tickets.
+* Feature - Added submenu items for the Import menu item in The Events Calendar.
+* Fix - Fixed PayPal typo.
+* Fix - Fixed text domains.
+* Fix - Added missing .pot file.
+* Tweak - Moved submenu items to the main Tickets menu in the admin bar.
+* Tweak - Added missing type declarations.
+* Tweak - Added and adjusted docBlocks.
+* Tweak - Simplified the code.
+* Misc - Removed some unused code.
 
 = [2.0.1] 2023-06-24 =
 

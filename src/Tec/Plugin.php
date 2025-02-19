@@ -11,6 +11,7 @@ namespace Tec\Extensions\Admin_Bar_Plus;
 
 use TEC\Common\Contracts\Service_Provider;
 use Tribe__Dependency;
+use WP_Admin_Bar;
 
 /**
  * Class Plugin
@@ -27,7 +28,7 @@ class Plugin extends Service_Provider {
 	 *
 	 * @var string
 	 */
-	const VERSION = '2.0.1';
+	const VERSION = '2.1.0';
 
 	/**
 	 * Stores the base slug for the plugin.
@@ -52,21 +53,21 @@ class Plugin extends Service_Provider {
 	 *
 	 * @var string Plugin Directory.
 	 */
-	public $plugin_dir;
+	public string $plugin_dir;
 
 	/**
 	 * @since 1.0.0
 	 *
 	 * @var string Plugin path.
 	 */
-	public $plugin_path;
+	public string $plugin_path;
 
 	/**
 	 * @since 1.0.0
 	 *
 	 * @var string Plugin URL.
 	 */
-	public $plugin_url;
+	public string $plugin_url;
 
 	/**
 	 * Is The Events Calendar active. If yes, we will add some extra functionality.
@@ -75,7 +76,7 @@ class Plugin extends Service_Provider {
 	 *
 	 * @return bool
 	 */
-	public $tec_active = false;
+	public bool $tec_active = false;
 
 	/**
 	 * Is Events Calendar PRO active. If yes, we will add some extra functionality.
@@ -84,7 +85,7 @@ class Plugin extends Service_Provider {
 	 *
 	 * @return bool
 	 */
-	public $ecp_active = false;
+	public bool $ecp_active = false;
 
 	/**
 	 * Is Event Tickets active. If yes, we will add some extra functionality.
@@ -93,7 +94,16 @@ class Plugin extends Service_Provider {
 	 *
 	 * @return bool
 	 */
-	public $et_active = false;
+	public bool $et_active = false;
+
+	/**
+	 * Is Event Tickets Plus active. If yes, we will add some extra functionality.
+	 *
+	 * @since 2.1.0
+	 *
+	 * @return bool
+	 */
+	public bool $etp_active = false;
 
 	/**
 	 * Is Filter Bar active. If yes, we will add some extra functionality.
@@ -102,7 +112,7 @@ class Plugin extends Service_Provider {
 	 *
 	 * @return bool
 	 */
-	public $fb_active = false;
+	public bool $fb_active = false;
 
 	/**
 	 * Is Community Events active. If yes, we will add some extra functionality.
@@ -111,10 +121,10 @@ class Plugin extends Service_Provider {
 	 *
 	 * @return bool
 	 */
-	public $ce_active = false;
+	public bool $ce_active = false;
 
 	/**
-	 * Setup the Extension's properties.
+	 * Set up the Extension's properties.
 	 *
 	 * This always executes even if the required plugins are not present.
 	 *
@@ -156,7 +166,7 @@ class Plugin extends Service_Provider {
 	 *
 	 * @return bool Whether the plugin dependency manifest is satisfied or not.
 	 */
-	protected function check_plugin_dependencies() {
+	protected function check_plugin_dependencies(): bool {
 		$this->register_plugin_dependencies();
 
 		return tribe_check_plugin( static::class );
@@ -185,38 +195,34 @@ class Plugin extends Service_Provider {
 		/** @var Tribe__Dependency $dep */
 		$dep = tribe( Tribe__Dependency::class );
 
-		if ( $dep->is_plugin_active( 'Tribe__Events__Main' ) ) {
-			$this->tec_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Events__Pro__Main' ) ) {
-			$this->ecp_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Tickets__Main' ) ) {
-			$this->et_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' ) ) {
-			$this->fb_active = true;
-		}
-		if ( $dep->is_plugin_active( 'Tribe__Events__Community__Main' ) ) {
-			$this->ce_active = true;
-		}
+		$this->tec_active = $dep->is_plugin_active( 'Tribe__Events__Main' );
+
+		$this->ecp_active = $dep->is_plugin_active( 'Tribe__Events__Pro__Main' );
+
+		$this->et_active = $dep->is_plugin_active( 'Tribe__Tickets__Main' );
+
+		$this->etp_active = $dep->is_plugin_active( 'Tribe__Tickets_Plus__Main' );
+
+		$this->fb_active = $dep->is_plugin_active( 'Tribe__Events__Filterbar__View' );
+
+		$this->ce_active = $dep->is_plugin_active( 'Tribe__Events__Community__Main' );
 	}
 
 	/**
 	 * Add our custom menu items, as applicable.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_items_tec_events( $admin_bar ) {
+	public function add_toolbar_items_tec_events( WP_Admin_Bar $admin_bar ) {
 
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-events-settings-general',
 				'parent' => 'tribe-events-settings',
-				'title'  => __( 'General', 'tribe-common' ),
+				'title'  => __( 'General', 'the-events-calendar' ),
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=general',
 				'meta'   => [
-					'title' => __( 'General', 'tribe-common' ),
+					'title' => __( 'General', 'the-events-calendar' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -226,10 +232,10 @@ class Plugin extends Service_Provider {
 			[
 				'id'     => 'tribe-events-settings-display',
 				'parent' => 'tribe-events-settings',
-				'title'  => __( 'Display', 'tribe-common' ),
+				'title'  => __( 'Display', 'the-events-calendar' ),
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=display',
 				'meta'   => [
-					'title' => __( 'Display', 'tribe-common' ),
+					'title' => __( 'Display', 'the-events-calendar' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -258,10 +264,10 @@ class Plugin extends Service_Provider {
 			[
 				'id'     => 'tribe-events-settings-apis',
 				'parent' => 'tribe-events-settings',
-				'title'  => __( 'Integrations', 'tribe-common' ),
+				'title'  => __( 'Integrations', 'the-events-calendar' ),
 				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=addons',
 				'meta'   => [
-					'title' => __( 'Integrations', 'tribe-common' ),
+					'title' => __( 'Integrations', 'the-events-calendar' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -282,35 +288,11 @@ class Plugin extends Service_Provider {
 	}
 
 	/**
-	 * Add Event Tickets' custom menu items.
-	 *
-	 * @param \WP_Admin_Bar $admin_bar
-	 */
-	public function add_toolbar_items_et( $admin_bar ) {
-		if ( ! $this->et_active ) {
-			return;
-		}
-
-		$admin_bar->add_menu(
-			[
-				'id'     => 'tribe-events-settings-tickets',
-				'parent' => 'tribe-events-settings',
-				'title'  => __( 'Tickets', 'event-tickets' ),
-				'href'   => 'edit.php?post_type=tribe_events&page=tec-events-settings&tab=event-tickets',
-				'meta'   => [
-					'title' => __( 'Tickets', 'event-tickets' ),
-					'class' => 'my_menu_item_class',
-				],
-			]
-		);
-	}
-
-	/**
 	 * Add Events Calendar Pro's custom menu items.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function maybe_add_toolbar_items_ecp( $admin_bar ) {
+	public function maybe_add_toolbar_items_ecp( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->ecp_active ) {
 			return;
 		}
@@ -345,9 +327,9 @@ class Plugin extends Service_Provider {
 	/**
 	 * Add Community Events' custom menu items.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function maybe_add_toolbar_items_ce( $admin_bar ) {
+	public function maybe_add_toolbar_items_ce( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->ce_active ) {
 			return;
 		}
@@ -369,9 +351,9 @@ class Plugin extends Service_Provider {
 	/**
 	 * Add Filter Bar's custom menu items.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function maybe_add_toolbar_items_filterbar( $admin_bar ) {
+	public function maybe_add_toolbar_items_filterbar( WP_Admin_Bar $admin_bar ) {
 		if ( ! $this->fb_active ) {
 			return;
 		}
@@ -393,9 +375,9 @@ class Plugin extends Service_Provider {
 	/**
 	 * Add our custom menu items, as applicable.
 	 *
-	 * @param \WP_Admin_Bar $admin_bar
+	 * @param WP_Admin_Bar $admin_bar
 	 */
-	public function add_toolbar_items_tec_tickets( $admin_bar ) {
+	public function add_toolbar_items_tec_tickets( WP_Admin_Bar $admin_bar ) {
 
 		if ( ! $this->et_active ) {
 			return;
@@ -405,10 +387,10 @@ class Plugin extends Service_Provider {
 			[
 				'id'     => 'tribe-tickets',
 				'parent' => false,
-				'title'  => __( 'Tickets', 'tribe-common' ),
+				'title'  => __( 'Tickets', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets',
 				'meta'   => [
-					'title' => __( 'Tickets', 'tribe-common' ),
+					'title' => __( 'Tickets', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -418,10 +400,10 @@ class Plugin extends Service_Provider {
 			[
 				'id'     => 'tribe-tickets-settings',
 				'parent' => 'tribe-tickets',
-				'title'  => __( 'Settings', 'tribe-common' ),
-				'href'   => 'admin.php?page=tec-tickets-settings&tab=general',
+				'title'  => __( 'Settings', 'event-tickets' ),
+				'href'   => 'admin.php?page=tec-tickets-settings',
 				'meta'   => [
-					'title' => __( 'Settings', 'tribe-common' ),
+					'title' => __( 'Settings', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -429,12 +411,20 @@ class Plugin extends Service_Provider {
 
 		$admin_bar->add_menu(
 			[
+				'id'     => 'tribe-tickets-div',
+				'parent' => 'tribe-tickets',
+				'title'  => '&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;',
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
 				'id'     => 'tribe-tickets-settings-general',
-				'parent' => 'tribe-tickets-settings',
-				'title'  => __( 'General', 'tribe-common' ),
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'General', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
 				'meta'   => [
-					'title' => __( 'General', 'tribe-common' ),
+					'title' => __( 'General', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -443,11 +433,11 @@ class Plugin extends Service_Provider {
 		$admin_bar->add_menu(
 			[
 				'id'     => 'tribe-tickets-settings-payments',
-				'parent' => 'tribe-tickets-settings',
-				'title'  => __( 'Payments', 'tribe-common' ),
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Payments', 'event-tickets' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=payments',
 				'meta'   => [
-					'title' => __( 'Payments', 'tribe-common' ),
+					'title' => __( 'Payments', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -457,11 +447,11 @@ class Plugin extends Service_Provider {
 			$admin_bar->add_menu(
 				[
 					'id'     => 'tribe-tickets-settings-payments-stripe',
-					'parent' => 'tribe-tickets-settings',
-					'title'  => '&#8594; ' . __( 'Stripe', 'tribe-common' ),
+					'parent' => 'tribe-tickets',
+					'title'  => '&#8594; ' . __( 'Stripe', 'event-tickets' ),
 					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
 					'meta'   => [
-						'title' => __( 'Stripe', 'tribe-common' ),
+						'title' => __( 'Stripe', 'event-tickets' ),
 						'class' => 'my_menu_item_class',
 					],
 				]
@@ -470,11 +460,11 @@ class Plugin extends Service_Provider {
 			$admin_bar->add_menu(
 				[
 					'id'     => 'tribe-tickets-settings-payments-paypal',
-					'parent' => 'tribe-tickets-settings',
-					'title'  => '&#8594; ' . __( 'PayPal', 'tribe-common' ),
+					'parent' => 'tribe-tickets',
+					'title'  => '&#8594; ' . __( 'PayPal', 'event-tickets' ),
 					'href'   => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
 					'meta'   => [
-						'title' => __( 'PayPal', 'tribe-common' ),
+						'title' => __( 'PayPal', 'event-tickets' ),
 						'class' => 'my_menu_item_class',
 					],
 				]
@@ -483,12 +473,107 @@ class Plugin extends Service_Provider {
 
 		$admin_bar->add_menu(
 			[
+				'id'     => 'tribe-tickets-settings-emails',
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Emails', 'event-tickets' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=emails',
+				'meta'   => [
+					'title' => __( 'Emails', 'event-tickets' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$this->maybe_add_toolbar_items_etp( $admin_bar );
+
+		$admin_bar->add_menu(
+			[
 				'id'     => 'tribe-tickets-settings-licenses',
-				'parent' => 'tribe-tickets-settings',
+				'parent' => 'tribe-tickets',
 				'title'  => __( 'Licenses', 'tribe-common' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=licenses',
 				'meta'   => [
 					'title' => __( 'Licenses', 'tribe-common' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+	}
+
+	/**
+	 * Add links to the Event Tickets Plus pages to the admin bar menu, when ETP is active.
+	 *
+	 * @param WP_Admin_Bar $admin_bar
+	 *
+	 * @return void
+	 *
+	 * @since 2.1.0
+	 */
+	public function maybe_add_toolbar_items_etp( WP_Admin_Bar $admin_bar ) {
+		if ( ! $this->etp_active ) {
+			return;
+		}
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-attendee-registration',
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Attendee Registration', 'event-tickets-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
+				'meta'   => [
+					'title' => __( 'Attendee Registration', 'event-tickets-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-wallet',
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Wallet & PDF', 'event-tickets-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
+				'meta'   => [
+					'title' => __( 'Wallet & PDF', 'event-tickets-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-wallet-apple-wallet',
+				'parent' => 'tribe-tickets',
+				'title'  => '&#8594; ' . __( 'Apple Wallet', 'event-tickets-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
+				'meta'   => [
+					'title' => __( 'Apple Wallet', 'event-tickets-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-wallet-pdf-tickets',
+				'parent' => 'tribe-tickets',
+				'title'  => '&#8594; ' . __( 'PDF Tickets', 'event-tickets-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet&section=pdf-tickets',
+				'meta'   => [
+					'title' => __( 'PDF Tickets', 'event-tickets-plus' ),
+					'class' => 'my_menu_item_class',
+				],
+			]
+		);
+
+		$admin_bar->add_menu(
+			[
+				'id'     => 'tribe-tickets-settings-integrations',
+				'parent' => 'tribe-tickets',
+				'title'  => __( 'Integrations', 'event-tickets-plus' ),
+				'href'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+				'meta'   => [
+					'title' => __( 'Integrations', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -505,11 +590,11 @@ class Plugin extends Service_Provider {
 	public function launch_admin_menu() {
 
 		if ( $this->tec_active ) {
-			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ], 10 );
+			add_action( 'admin_menu', [ $this, 'add_tec_submenu_items' ] );
 		}
 
 		if ( $this->et_active ) {
-			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 9 );
+			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 15 );
 		}
 	}
 
@@ -518,6 +603,24 @@ class Plugin extends Service_Provider {
 	 */
 	public function add_tec_submenu_items() {
 		$admin_pages = tribe( 'admin.pages' );
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-import-scheduled',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'Scheduled', 'the-events-calendar' ),
+				'path'     => 'aggregator&post_type=tribe_events&tab=scheduled',
+			]
+		);
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-events-import-history',
+				'parent'   => 'edit.php?post_type=tribe_events',
+				'title'    => '&#8594; ' . esc_html__( 'History', 'the-events-calendar' ),
+				'path'     => 'aggregator&post_type=tribe_events&tab=history',
+			]
+		);
 
 		$admin_pages->register_page(
 			[
@@ -532,7 +635,7 @@ class Plugin extends Service_Provider {
 			[
 				'id'       => 'tec-events-settings-general',
 				'parent'   => 'edit.php?post_type=tribe_events',
-				'title'    => '&#8594; ' . esc_html__( 'General', 'tribe-common' ),
+				'title'    => '&#8594; ' . esc_html__( 'General', 'the-events-calendar' ),
 				'path'     => 'tec-events-settings&tab=general',
 			]
 		);
@@ -541,7 +644,7 @@ class Plugin extends Service_Provider {
 			[
 				'id'       => 'tec-events-settings-display',
 				'parent'   => 'edit.php?post_type=tribe_events',
-				'title'    => '&#8594; ' . esc_html__( 'Display', 'tribe-common' ),
+				'title'    => '&#8594; ' . esc_html__( 'Display', 'the-events-calendar' ),
 				'path'     => 'tec-events-settings&tab=display',
 			]
 		);
@@ -626,7 +729,7 @@ class Plugin extends Service_Provider {
 			[
 				'id'       => 'tec-tickets-settings-2',
 				'parent'   => 'tec-tickets',
-				'title'    => esc_html__( 'Settings', 'the-events-calendar' ),
+				'title'    => esc_html__( 'Settings', 'event-tickets' ),
 				'path'     => 'tec-tickets-settings',
 			]
 		);
@@ -635,8 +738,8 @@ class Plugin extends Service_Provider {
 			[
 				'id'       => 'tec-tickets-general',
 				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'General', 'the-events-calendar' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
+				'title'    => '&#8594; ' . esc_html__( 'General', 'event-tickets' ),
+				'path'     => 'tec-tickets-settings&tab=event-tickets',
 			]
 		);
 
@@ -644,8 +747,8 @@ class Plugin extends Service_Provider {
 			[
 				'id'       => 'tec-tickets-payments',
 				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'Payments', 'the-events-calendar' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=payments',
+				'title'    => '&#8594; ' . esc_html__( 'Payments', 'event-tickets' ),
+				'path'     => 'tec-tickets-settings&tab=payments',
 			]
 		);
 
@@ -654,8 +757,8 @@ class Plugin extends Service_Provider {
 				[
 					'id'       => 'tec-tickets-payments-stripe',
 					'parent'   => 'tec-tickets',
-					'title'    => '&ndash;&#8594; ' . esc_html__( 'Stripe', 'the-events-calendar' ),
-					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'Stripe', 'event-tickets' ),
+					'path'     => 'tec-tickets-settings&tab=payments&tc-section=stripe',
 				]
 			);
 
@@ -663,8 +766,68 @@ class Plugin extends Service_Provider {
 				[
 					'id'       => 'tec-tickets-payments-paypal',
 					'parent'   => 'tec-tickets',
-					'title'    => '&ndash;&#8594; ' . esc_html__( 'Paypal', 'the-events-calendar' ),
-					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
+					'title'    => '&ndash;&#8594; ' . esc_html__( 'PayPal', 'event-tickets' ),
+					'path'     => 'tec-tickets-settings&tab=payments&tc-section=paypal',
+				]
+			);
+		}
+
+		$admin_pages->register_page(
+			[
+				'id'       => 'tec-tickets-emails',
+				'parent'   => 'tec-tickets',
+				'title'    => '&#8594; ' . esc_html__( 'Emails', 'event-tickets' ),
+				'path'     => 'tec-tickets-settings&tab=emails',
+			]
+		);
+
+		if ( $this->etp_active ) {
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-attendee-registration',
+					'parent' => 'tec-tickets',
+					'title'  => '&#8594; ' . esc_html__( 'Attendee Reg.', 'tec-labs-admin-bar-plus' ),
+					'path'   => 'tec-tickets-settings&tab=attendee-registration',
+				]
+			);
+		}
+
+		if ( $this->etp_active ) {
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-wallet',
+					'parent' => 'tec-tickets',
+					'title'  => '&#8594; ' . esc_html__( 'Wallet & PDF', 'event-tickets-plus' ),
+					'path'   => 'tec-tickets-settings&tab=wallet',
+				]
+			);
+
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-wallet-apple-wallet-passes',
+					'parent' => 'tec-tickets',
+					'title'  => '&ndash;&#8594; ' . esc_html__( 'Apple Wallet', 'event-tickets-plus' ),
+					'path'   => 'tec-tickets-settings&tab=wallet',
+				]
+			);
+
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-wallet-pdf-tickets',
+					'parent' => 'tec-tickets',
+					'title'  => '&ndash;&#8594; ' . esc_html__( 'PDF Tickets', 'event-tickets-plus' ),
+					'path'   => 'tec-tickets-settings&tab=wallet&section=pdf-tickets',
+				]
+			);
+		}
+
+		if ( $this->etp_active ) {
+			$admin_pages->register_page(
+				[
+					'id'     => 'tec-tickets-integrations',
+					'parent' => 'tec-tickets',
+					'title'  => '&#8594; ' . esc_html__( 'Integrations', 'event-tickets-plus' ),
+					'path'   => 'tec-tickets-settings&tab=integrations',
 				]
 			);
 		}
@@ -673,8 +836,8 @@ class Plugin extends Service_Provider {
 			[
 				'id'       => 'tec-tickets-licenses',
 				'parent'   => 'tec-tickets',
-				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'the-events-calendar' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=licenses',
+				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'tribe-common' ),
+				'path'     => 'tec-tickets-settings&tab=licenses',
 			]
 		);
 	}
