@@ -412,7 +412,7 @@ class Plugin extends Service_Provider {
 				'id'     => 'tribe-tickets-settings',
 				'parent' => 'tribe-tickets',
 				'title'  => __( 'Settings', 'event-tickets' ),
-				'href'   => 'admin.php?page=tec-tickets-settings&tab=general',
+				'href'   => 'admin.php?page=tec-tickets-settings',
 				'meta'   => [
 					'title' => __( 'Settings', 'event-tickets' ),
 					'class' => 'my_menu_item_class',
@@ -581,7 +581,7 @@ class Plugin extends Service_Provider {
 	 * @since 2.1.0
 	 */
 	public function maybe_add_toolbar_items_etwp( WP_Admin_Bar $admin_bar ) {
-		if ( ! $this->etwp_active ) {
+		if ( ! $this->etwp_active && ! $this->etp_active ) {
 			return;
 		}
 
@@ -589,10 +589,10 @@ class Plugin extends Service_Provider {
 			[
 				'id'     => 'tribe-tickets-settings-wallet-plus',
 				'parent' => 'tribe-tickets',
-				'title'  => __( 'Wallet Plus', 'event-tickets-wallet-plus' ),
+				'title'  => __( 'Wallet & PDF', 'event-tickets-plus' ),
 				'href'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
 				'meta'   => [
-					'title' => __( 'Wallet Plus', 'event-tickets-wallet-plus' ),
+					'title' => __( 'Wallet & PDF', 'event-tickets-plus' ),
 					'class' => 'my_menu_item_class',
 				],
 			]
@@ -784,7 +784,7 @@ class Plugin extends Service_Provider {
 				'id'       => 'tec-tickets-general',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'General', 'event-tickets' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=event-tickets',
+				'path'     => 'tec-tickets-settings&tab=event-tickets',
 			]
 		);
 
@@ -793,7 +793,7 @@ class Plugin extends Service_Provider {
 				'id'       => 'tec-tickets-payments',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'Payments', 'event-tickets' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=payments',
+				'path'     => 'tec-tickets-settings&tab=payments',
 			]
 		);
 
@@ -803,7 +803,7 @@ class Plugin extends Service_Provider {
 					'id'       => 'tec-tickets-payments-stripe',
 					'parent'   => 'tec-tickets',
 					'title'    => '&ndash;&#8594; ' . esc_html__( 'Stripe', 'event-tickets' ),
-					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=stripe',
+					'path'     => 'tec-tickets-settings&tab=payments&tc-section=stripe',
 				]
 			);
 
@@ -812,7 +812,7 @@ class Plugin extends Service_Provider {
 					'id'       => 'tec-tickets-payments-paypal',
 					'parent'   => 'tec-tickets',
 					'title'    => '&ndash;&#8594; ' . esc_html__( 'PayPal', 'event-tickets' ),
-					'path'     => 'admin.php?page=tec-tickets-settings&tab=payments&tc-section=paypal',
+					'path'     => 'tec-tickets-settings&tab=payments&tc-section=paypal',
 				]
 			);
 		}
@@ -822,7 +822,7 @@ class Plugin extends Service_Provider {
 				'id'       => 'tec-tickets-emails',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'Emails', 'event-tickets' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=emails',
+				'path'     => 'tec-tickets-settings&tab=emails',
 			]
 		);
 
@@ -831,19 +831,19 @@ class Plugin extends Service_Provider {
 				[
 					'id'     => 'tec-tickets-attendee-registration',
 					'parent' => 'tec-tickets',
-					'title'  => '&#8594; ' . esc_html__( 'Attendee Registration', 'event-tickets-plus' ),
-					'path'   => 'admin.php?page=tec-tickets-settings&tab=attendee-registration',
+					'title'  => '&#8594; ' . esc_html__( 'Attendee Reg.', 'tec-labs-admin-bar-plus' ),
+					'path'   => 'tec-tickets-settings&tab=attendee-registration',
 				]
 			);
 		}
 
-		if ( $this->etwp_active ) {
+		if ( $this->etwp_active || $this->etp_active ) {
 			$admin_pages->register_page(
 				[
 					'id'     => 'tec-tickets-wallet-plus',
 					'parent' => 'tec-tickets',
-					'title'  => '&#8594; ' . esc_html__( 'Wallet Plus', 'event-tickets-wallet-plus' ),
-					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
+					'title'  => '&#8594; ' . esc_html__( 'Wallet & PDF', 'event-tickets-plus' ),
+					'path'   => 'tec-tickets-settings&tab=wallet',
 				]
 			);
 
@@ -851,8 +851,8 @@ class Plugin extends Service_Provider {
 				[
 					'id'     => 'tec-tickets-wallet-plus-apple-wallet-passes',
 					'parent' => 'tec-tickets',
-					'title'  => '&ndash;&#8594; ' . esc_html__( 'Apple Wallet', 'event-tickets-wallet-plus' ),
-					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet',
+					'title'  => '&ndash;&#8594; ' . esc_html__( 'Apple Wallet', 'event-tickets-plus' ),
+					'path'   => 'tec-tickets-settings&tab=wallet',
 				]
 			);
 
@@ -860,8 +860,8 @@ class Plugin extends Service_Provider {
 				[
 					'id'     => 'tec-tickets-wallet-plus-pdf-tickets',
 					'parent' => 'tec-tickets',
-					'title'  => '&ndash;&#8594; ' . esc_html__( 'PDF Tickets', 'event-tickets-wallet-plus' ),
-					'path'   => 'admin.php?page=tec-tickets-settings&tab=wallet&section=pdf-tickets',
+					'title'  => '&ndash;&#8594; ' . esc_html__( 'PDF Tickets', 'event-tickets-plus' ),
+					'path'   => 'tec-tickets-settings&tab=wallet&section=pdf-tickets',
 				]
 			);
 		}
@@ -872,7 +872,7 @@ class Plugin extends Service_Provider {
 					'id'     => 'tec-tickets-integrations',
 					'parent' => 'tec-tickets',
 					'title'  => '&#8594; ' . esc_html__( 'Integrations', 'event-tickets-plus' ),
-					'path'   => 'admin.php?page=tec-tickets-settings&tab=integrations',
+					'path'   => 'tec-tickets-settings&tab=integrations',
 				]
 			);
 		}
@@ -882,7 +882,7 @@ class Plugin extends Service_Provider {
 				'id'       => 'tec-tickets-licenses',
 				'parent'   => 'tec-tickets',
 				'title'    => '&#8594; ' . esc_html__( 'Licenses', 'tribe-common' ),
-				'path'     => 'admin.php?page=tec-tickets-settings&tab=licenses',
+				'path'     => 'tec-tickets-settings&tab=licenses',
 			]
 		);
 	}
