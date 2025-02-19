@@ -37,11 +37,10 @@ We're always interested in your feedback and our [Help Desk](https://support.the
 
 == Changelog ==
 
-= [2.1.0] 2023-11-15 =
+= [2.1.0] 2025-02-19 =
 
 * Feature - Added submenu items related to Event Tickets Plus functionality.
 * Feature - Added submenu items for the new Email settings tab in Event Tickets.
-* Feature - Added submenu items related to Event Tickets Wallet Plus functionality.
 * Fix - Fixed PayPal typo.
 * Fix - Fixed text domains.
 * Tweak - Moved submenu items to the main Tickets menu in the admin bar.
