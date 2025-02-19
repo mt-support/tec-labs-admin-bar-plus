@@ -639,7 +639,7 @@ class Plugin extends Service_Provider {
 		}
 
 		if ( $this->et_active ) {
-			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 9 );
+			add_action( 'admin_menu', [ $this, 'add_tickets_submenu_items' ], 15 );
 		}
 	}
 
